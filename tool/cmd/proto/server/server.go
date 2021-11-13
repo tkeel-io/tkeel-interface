@@ -71,9 +71,13 @@ func run(cmd *cobra.Command, args []string) {
 
 	fmt.Print("💻 Add the following code to cmd/<project>.go  👇:\n\n")
 	for _, s := range res {
+		fmt.Println(color.WhiteString("import(" ))
+		fmt.Println(color.WhiteString("%s_v1 \"%s\"", s.Service,s.Package))
+		fmt.Println(color.WhiteString(")"))
+		fmt.Println()
 		fmt.Println(color.WhiteString("%sSrv := service.New%sService()", s.Service, s.Service))
-		fmt.Println(color.WhiteString("v1.Register%sHTTPServer(httpSrv.Container, %sSrv)", s.Service, s.Service))
-		fmt.Println(color.WhiteString("v1.Register%sServer(grpcSrv.GetServe(), %sSrv)", s.Service, s.Service))
+		fmt.Println(color.WhiteString("%s_v1.Register%sHTTPServer(httpSrv.Container, %sSrv)", s.Service, s.Service, s.Service))
+		fmt.Println(color.WhiteString("%s_v1.Register%sServer(grpcSrv.GetServe(), %sSrv)", s.Service, s.Service, s.Service))
 	}
 
 }
