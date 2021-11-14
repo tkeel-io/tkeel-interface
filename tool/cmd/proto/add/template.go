@@ -7,6 +7,7 @@ import (
 )
 
 const protoTemplate = `
+{{$srvPath := .Service | toLower}}
 syntax = "proto3";
 
 package {{.Package}};
@@ -16,32 +17,61 @@ option java_multiple_files = true;
 option java_package = "{{.JavaPackage}}";
 
 service {{.Service}} {
-	rpc Create{{.Service}} (Create{{.Service}}Request) returns (Create{{.Service}}Reply);
-	rpc Update{{.Service}} (Update{{.Service}}Request) returns (Update{{.Service}}Reply);
-	rpc Delete{{.Service}} (Delete{{.Service}}Request) returns (Delete{{.Service}}Reply);
-	rpc Get{{.Service}} (Get{{.Service}}Request) returns (Get{{.Service}}Reply);
-	rpc List{{.Service}} (List{{.Service}}Request) returns (List{{.Service}}Reply);
+	rpc Create{{.Service}} (Create{{.Service}}Request) returns (Create{{.Service}}Response) {
+		option (google.api.http) = {
+			post : "/{{$srvPath}}"
+			body : "*"
+		};
+	};
+	rpc Update{{.Service}} (Update{{.Service}}Request) returns (Update{{.Service}}Response) {
+		option (google.api.http) = {
+			put : "/{{$srvPath}}/{uid}"
+			body : "*"
+		};
+	};
+	rpc Delete{{.Service}} (Delete{{.Service}}Request) returns (Delete{{.Service}}Response) {
+		option (google.api.http) = {
+			delete : "/{{$srvPath}}/{uid}"
+		};
+	};
+	rpc Get{{.Service}} (Get{{.Service}}Request) returns (Get{{.Service}}Response) {
+		option (google.api.http) = {
+			get : "/{{$srvPath}}/{uid}"
+		};
+	};
+	rpc List{{.Service}} (List{{.Service}}Request) returns (List{{.Service}}Response) {
+		option (google.api.http) = {
+			get : "/{{$srvPath}}"
+		};
+	};
 }
 
-message Create{{.Service}}Request {}
-message Create{{.Service}}Reply {}
+message {{.Service}}Object {
+	string uid = 1;
+}
 
-message Update{{.Service}}Request {}
-message Update{{.Service}}Reply {}
+message Create{{.Service}}Request { {{.Service}}Object obj = 1; }
+message Create{{.Service}}Response {}
 
-message Delete{{.Service}}Request {}
-message Delete{{.Service}}Reply {}
+message Update{{.Service}}Request { {{.Service}}Object obj = 1; }
+message Update{{.Service}}Response {}
 
-message Get{{.Service}}Request {}
-message Get{{.Service}}Reply {}
+message Delete{{.Service}}Request { string uid = 1; }
+message Delete{{.Service}}Response { {{.Service}}Object obj = 1; }
+
+message Get{{.Service}}Request { string uid = 1;}
+message Get{{.Service}}Response { {{.Service}}Object obj = 1; }
 
 message List{{.Service}}Request {}
-message List{{.Service}}Reply {}
+message List{{.Service}}Response { repeated {{.Service}}Object objList = 1; }
 `
 
 func (p *Proto) execute() ([]byte, error) {
+	funcMap := template.FuncMap{
+		"toLower": strings.ToLower,
+	}
 	buf := new(bytes.Buffer)
-	tmpl, err := template.New("proto").Parse(strings.TrimSpace(protoTemplate))
+	tmpl, err := template.New("proto").Funcs(funcMap).Parse(strings.TrimSpace(protoTemplate))
 	if err != nil {
 		return nil, err
 	}
