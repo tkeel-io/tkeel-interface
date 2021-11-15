@@ -27,7 +27,7 @@ tkeel-tool proto add api/helloworld/helloworld.proto
 make api
 
 # Generate service template
-tkeel-tool proto server api/helloworld/helloworld.proto -t internal/service
+tkeel-tool proto service api/helloworld/helloworld.proto -t internal/service
 
 # Generate server template (this output needs to be manually added to cmd/helloworld/main.go)
 tkeel-tool proto server api/helloworld/helloworld.proto

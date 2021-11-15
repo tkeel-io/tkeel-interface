@@ -25,7 +25,7 @@ tkeel-tool proto add api/helloworld/helloworld.proto
 make api
 
 # 生成service模板
-tkeel-tool proto server api/helloworld/helloworld.proto -t internal/service
+tkeel-tool proto service api/helloworld/helloworld.proto -t internal/service
 
 # 生成server模板(此输出需要手工加入 cmd/helloworld/main.go 中)
 tkeel-tool proto server api/helloworld/helloworld.proto
