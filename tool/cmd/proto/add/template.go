@@ -11,6 +11,8 @@ syntax = "proto3";
 
 package {{.Package}};
 
+import "google/api/annotations.proto";
+
 option go_package = "{{.GoPackage}}";
 option java_multiple_files = true;
 option java_package = "{{.JavaPackage}}";
