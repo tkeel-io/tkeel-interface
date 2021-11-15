@@ -12,22 +12,22 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// CmdServer the service command.
+// CmdService the service command.
 var CmdService = &cobra.Command{
 	Use:   "service",
-	Short: "Generate the proto Server implementations",
-	Long:  "Generate the proto Server implementations. Example: tkeel-tool proto service api/xxx.proto -target-dir=internal/service",
+	Short: "Generate the proto service implementations",
+	Long:  "Generate the proto service implementations. Example: tkeel-tool proto service api/xxx.proto -target-dir=pkg/service",
 	Run:   run,
 }
 var targetDir string
 
 func init() {
-	CmdService.Flags().StringVarP(&targetDir, "target-dir", "t", "internal/service", "generate target directory")
+	CmdService.Flags().StringVarP(&targetDir, "target-dir", "t", "pkg/service", "generate target directory")
 }
 
 func run(cmd *cobra.Command, args []string) {
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "Please specify the proto file. Example: tkeel-tool proto server api/xxx.proto")
+		fmt.Fprintln(os.Stderr, "Please specify the proto file. Example: tkeel-tool proto service api/xxx.proto")
 		return
 	}
 	reader, err := os.Open(args[0])
@@ -89,7 +89,6 @@ func run(cmd *cobra.Command, args []string) {
 		}
 		fmt.Println(to)
 	}
-
 }
 
 func getMethodType(streamsRequest, streamsReturns bool) MethodType {

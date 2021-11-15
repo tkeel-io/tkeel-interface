@@ -2,10 +2,11 @@ package server
 
 import (
 	"fmt"
-	"github.com/fatih/color"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/fatih/color"
 
 	"github.com/emicklei/proto"
 	"github.com/spf13/cobra"
@@ -15,13 +16,13 @@ import (
 var CmdServer = &cobra.Command{
 	Use:   "server",
 	Short: "Generate the proto Server implementations",
-	Long:  "Generate the proto Server implementations. Example: tkeel proto server api/xxx.proto -target-dir=internal/service",
+	Long:  "Generate the proto Server implementations. Example: tkeel proto server api/xxx.proto -target-dir=pkg/service",
 	Run:   run,
 }
 var targetDir string
 
 func init() {
-	CmdServer.Flags().StringVarP(&targetDir, "target-dir", "t", "internal/service", "generate target directory")
+	CmdServer.Flags().StringVarP(&targetDir, "target-dir", "t", "pkg/service", "generate target directory")
 }
 
 func run(cmd *cobra.Command, args []string) {
@@ -71,15 +72,14 @@ func run(cmd *cobra.Command, args []string) {
 
 	fmt.Print("💻 Add the following code to cmd/<project>.go  👇:\n\n")
 	for _, s := range res {
-		fmt.Println(color.WhiteString("import(" ))
-		fmt.Println(color.WhiteString("%s_v1 \"%s\"", s.Service,s.Package))
+		fmt.Println(color.WhiteString("import("))
+		fmt.Println(color.WhiteString("%s_v1 \"%s\"", s.Service, s.Package))
 		fmt.Println(color.WhiteString(")"))
 		fmt.Println()
 		fmt.Println(color.WhiteString("%sSrv := service.New%sService()", s.Service, s.Service))
 		fmt.Println(color.WhiteString("%s_v1.Register%sHTTPServer(httpSrv.Container, %sSrv)", s.Service, s.Service, s.Service))
 		fmt.Println(color.WhiteString("%s_v1.Register%sServer(grpcSrv.GetServe(), %sSrv)", s.Service, s.Service, s.Service))
 	}
-
 }
 
 func getMethodType(streamsRequest, streamsReturns bool) MethodType {
