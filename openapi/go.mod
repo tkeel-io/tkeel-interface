@@ -1,4 +1,4 @@
-module github.com/tkeel/tkeel-interface/openapi
+module github.com/tkeel-io/tkeel-interface/openapi
 
 go 1.17
 
