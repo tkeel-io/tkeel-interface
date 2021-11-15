@@ -9,31 +9,31 @@ tkeel-tool is a development tool for tKeel developers, which facilitates the rap
 -[protoc-gen-go](https://github.com/protocolbuffers/protobuf-go)
 
 
-### Create a service
+### Quick Start
 ```
 # Create project template
-tkeel-tool new helloworld
+tkeel-tool new github.com/tkeel-io/helloworld
 
 cd helloworld
 
 # Download necessary plug-ins
 make init
 
-# Pull project dependencies
-go mod download
-
 # Generate proto template
 tkeel-tool proto add api/helloworld/helloworld.proto
+
 # Generate proto source code
-tkeel-tool proto client api/helloworld/helloworld.proto
+make api
+
 # Generate service template
 tkeel-tool proto server api/helloworld/helloworld.proto -t internal/service
+
 # Generate server template (this output needs to be manually added to cmd/helloworld/main.go)
 tkeel-tool proto server api/helloworld/helloworld.proto
-
-# Generate all proto source code
-go generate ./...
 
 # Run the program
 go run cmd/helloworld/main.go
 ```
+
+
+
