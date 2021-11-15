@@ -4,12 +4,13 @@ tkeel-tool is a development tool for tKeel developers, which facilitates the rap
 
 ## Getting Started
 ### Required
--[go](https://golang.org/dl/)
--[protoc](https://github.com/protocolbuffers/protobuf)
--[protoc-gen-go](https://github.com/protocolbuffers/protobuf-go)
+- [go](https://golang.org/dl/)
+- [protoc](https://github.com/protocolbuffers/protobuf)
+- [protoc-gen-go](https://github.com/protocolbuffers/protobuf-go)
 
 
 ### Quick Start
+
 ```
 # Create project template
 tkeel-tool new github.com/tkeel-io/helloworld
