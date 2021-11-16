@@ -55,7 +55,7 @@ message {{.Service}}Object {
 message Create{{.Service}}Request { {{.Service}}Object obj = 1; }
 message Create{{.Service}}Response {}
 
-message Update{{.Service}}Request { {{.Service}}Object obj = 1; }
+message Update{{.Service}}Request { {{.Service}}Object obj = 1;  string uid = 2; }
 message Update{{.Service}}Response {}
 
 message Delete{{.Service}}Request { string uid = 1; }

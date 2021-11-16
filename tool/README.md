@@ -21,16 +21,16 @@ cd helloworld
 make init
 
 # Generate proto template
-tkeel-tool proto add api/helloworld/helloworld.proto
+tkeel-tool proto add api/helloworld/v1/helloworld.proto
 
 # Generate proto source code
 make api
 
 # Generate service template
-tkeel-tool proto service api/helloworld/helloworld.proto -t internal/service
+tkeel-tool proto service api/helloworld/v1/helloworld.proto -t pkg/service
 
 # Generate server template (this output needs to be manually added to cmd/helloworld/main.go)
-tkeel-tool proto server api/helloworld/helloworld.proto
+tkeel-tool proto server api/helloworld/v1/helloworld.proto
 
 # Run the program
 go run cmd/helloworld/main.go
