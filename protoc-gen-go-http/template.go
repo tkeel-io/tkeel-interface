@@ -26,27 +26,29 @@ func new{{.ServiceType}}HTTPHandler(s {{.ServiceType}}HTTPServer) *{{.ServiceTyp
 {{- range .MethodSets}}
 
 func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_restful.Response) {
-	in := &{{.Request}}{}
+	in := {{.Request}}{}
 
 	{{- if .HasBody}}
-	if err := transportHTTP.GetBody(req, in); err != nil {
+	if err := transportHTTP.GetBody(req, &in{{.Body}}); err != nil {
 		resp.WriteErrorString(http.StatusBadRequest, err.Error())
 		return
 	}
-	{{- else}}
-	if err := transportHTTP.GetQuery(req, in); err != nil {
+	{{- if ne .Body ""}}
+	if err := transportHTTP.GetQuery(req, &in); err != nil {
 		resp.WriteErrorString(http.StatusBadRequest, err.Error())
 		return
 	}
 	{{- end}}
+	
+	{{- end}}
 	{{- if .HasVars}}
-	if err := transportHTTP.GetPathValue(req, in); err != nil {
+	if err := transportHTTP.GetPathValue(req, &in); err != nil {
 		resp.WriteErrorString(http.StatusBadRequest, err.Error())
 		return
 	}
 	{{- end}}
 
-	out,err := h.srv.{{.Name}}(req.Request.Context(),in)
+	out,err := h.srv.{{.Name}}(req.Request.Context(), &in)
 	if err != nil {
 		resp.WriteErrorString(http.StatusInternalServerError, err.Error())
 		return
