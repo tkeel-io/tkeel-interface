@@ -19,16 +19,16 @@ cd helloworld
 make init
 
 # 生成proto模板
-tkeel-tool proto add api/helloworld/helloworld.proto
+tkeel-tool proto add api/helloworld/v1/helloworld.proto
 
 # 下载必须的插件
 make api
 
 # 生成service模板
-tkeel-tool proto service api/helloworld/helloworld.proto -t internal/service
+tkeel-tool proto service api/helloworld/v1/helloworld.proto -t pkg/service
 
 # 生成server模板(此输出需要手工加入 cmd/helloworld/main.go 中)
-tkeel-tool proto server api/helloworld/helloworld.proto
+tkeel-tool proto server api/helloworld/v1/helloworld.proto
 
 # 运行程序
 go run cmd/helloworld/main.go
