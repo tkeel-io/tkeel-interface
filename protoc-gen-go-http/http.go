@@ -52,6 +52,7 @@ func generateFileContent(gen *protogen.Plugin, file *protogen.File, g *protogen.
 	g.P("// import package.", contextPackage.Ident(""), httpPackage.Ident(""),
 		restfulPackage.Ident(""), jsonPackage.Ident(""))
 	g.P("")
+	g.P("const _ = transportHTTP.ImportAndUsed")
 	for _, service := range file.Services {
 		genService(gen, file, g, service, omitempty)
 	}
