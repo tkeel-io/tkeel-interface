@@ -39,7 +39,11 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 		return
 	}
 	{{- end}}
-	
+	{{- else}}
+	if err := transportHTTP.GetQuery(req, &in); err != nil {
+		resp.WriteErrorString(http.StatusBadRequest, err.Error())
+		return
+	}
 	{{- end}}
 	{{- if .HasVars}}
 	if err := transportHTTP.GetPathValue(req, &in); err != nil {
