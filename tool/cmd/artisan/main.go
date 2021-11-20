@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/tkeel-io/tkeel-interface/tool/cmd/project"
-	"github.com/tkeel-io/tkeel-interface/tool/cmd/proto"
+	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/project"
+	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/proto"
 	"github.com/tkeel-io/tkeel-interface/tool/pkg/version"
 
 	"github.com/spf13/cobra"

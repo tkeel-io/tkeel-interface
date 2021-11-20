@@ -1,10 +1,10 @@
 package proto
 
 import (
-	"github.com/tkeel-io/tkeel-interface/tool/cmd/proto/add"
-	"github.com/tkeel-io/tkeel-interface/tool/cmd/proto/client"
-	"github.com/tkeel-io/tkeel-interface/tool/cmd/proto/server"
-	"github.com/tkeel-io/tkeel-interface/tool/cmd/proto/service"
+	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/proto/add"
+	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/proto/client"
+	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/proto/server"
+	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/proto/service"
 
 	"github.com/spf13/cobra"
 )
