@@ -1,6 +1,6 @@
-# tkeel-tool
+# artisan (tkeel-tool)
 
-tkeel-tool 是面向 tKeel 开发者的开发工具，方便快速生成框架代码。
+The artisan 是面向 tKeel 开发者的开发工具，方便快速生成框架代码。
 
 ## Getting Started
 ### Required
@@ -10,8 +10,11 @@ tkeel-tool 是面向 tKeel 开发者的开发工具，方便快速生成框架�
 
 ### Quick Start
 ```
+# 安装
+go get -u github.com/tkeel-io/tkeel-interface/tool/cmd/artisan
+
 # 创建项目模板
-tkeel-tool new github.com/tkeel-io/helloworld
+artisan new github.com/tkeel-io/helloworld
 
 cd helloworld
 
@@ -19,16 +22,16 @@ cd helloworld
 make init
 
 # 生成proto模板
-tkeel-tool proto add api/helloworld/v1/helloworld.proto
+artisan proto add api/helloworld/v1/helloworld.proto
 
 # 下载必须的插件
 make api
 
 # 生成service模板
-tkeel-tool proto service api/helloworld/v1/helloworld.proto -t pkg/service
+artisan proto service api/helloworld/v1/helloworld.proto -t pkg/service
 
 # 生成server模板(此输出需要手工加入 cmd/helloworld/main.go 中)
-tkeel-tool proto server api/helloworld/v1/helloworld.proto
+artisan proto server api/helloworld/v1/helloworld.proto
 
 # 运行程序
 go run cmd/helloworld/main.go

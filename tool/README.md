@@ -1,6 +1,6 @@
-# tkeel-tool
+# artisan (tkeel-tool)
 
-tkeel-tool is a development tool for tKeel developers, which facilitates the rapid generation of framework code.
+The artisan is a development tool for tKeel developers, which facilitates the rapid generation of framework code.
 
 ## Getting Started
 ### Required
@@ -12,8 +12,11 @@ tkeel-tool is a development tool for tKeel developers, which facilitates the rap
 ### Quick Start
 
 ```
+# Install
+go get -u github.com/tkeel-io/tkeel-interface/tool/cmd/artisan
+
 # Create project template
-tkeel-tool new github.com/tkeel-io/helloworld
+artisan new github.com/tkeel-io/helloworld
 
 cd helloworld
 
@@ -21,16 +24,16 @@ cd helloworld
 make init
 
 # Generate proto template
-tkeel-tool proto add api/helloworld/v1/helloworld.proto
+artisan proto add api/helloworld/v1/helloworld.proto
 
 # Generate proto source code
 make api
 
 # Generate service template
-tkeel-tool proto service api/helloworld/v1/helloworld.proto -t pkg/service
+artisan proto service api/helloworld/v1/helloworld.proto -t pkg/service
 
 # Generate server template (this output needs to be manually added to cmd/helloworld/main.go)
-tkeel-tool proto server api/helloworld/v1/helloworld.proto
+artisan proto server api/helloworld/v1/helloworld.proto
 
 # Run the program
 go run cmd/helloworld/main.go
