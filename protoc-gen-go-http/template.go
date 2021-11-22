@@ -52,8 +52,7 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 	}
 	{{- end}}
 
-	ctx := transportHTTP.ContextWithHeader(req.Request.Context(), transportHTTP.ContextHTTPHeaderKey,
-		req.Request.Header)
+	ctx := transportHTTP.ContextWithHeader(req.Request.Context(), req.Request.Header)
 
 	out,err := h.srv.{{.Name}}(ctx, &in)
 	if err != nil {
