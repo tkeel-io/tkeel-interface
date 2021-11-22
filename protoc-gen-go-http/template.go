@@ -52,9 +52,14 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 	}
 	{{- end}}
 
-	out,err := h.srv.{{.Name}}(req.Request.Context(), &in)
+	ctx := context.WithValue(req.Request.Context(), transportHTTP.ContextHTTPHeaderKey,
+		req.Request.Header)
+
+	out,err := h.srv.{{.Name}}(ctx, &in)
 	if err != nil {
-		resp.WriteErrorString(http.StatusInternalServerError, err.Error())
+		tErr := errors.FromError(err)
+		httpCode := errors.GRPCToHTTPStatusCode(tErr.GRPCStatus().Code())
+		resp.WriteErrorString(httpCode, tErr.Message)
 		return
 	}
 
