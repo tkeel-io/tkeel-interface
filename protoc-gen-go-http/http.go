@@ -16,6 +16,7 @@ import (
 const (
 	contextPackage       = protogen.GoImportPath("context")
 	httpPackage          = protogen.GoImportPath("net/http")
+	reflectPackage       = protogen.GoImportPath("reflect")
 	restfulPackage       = protogen.GoImportPath("github.com/emicklei/go-restful")
 	jsonPackage          = protogen.GoImportPath("encoding/json")
 	kitErrorsPackage     = protogen.GoImportPath("github.com/tkeel-io/kit/errors")
@@ -50,7 +51,7 @@ func generateFileContent(gen *protogen.Plugin, file *protogen.File, g *protogen.
 	g.P("")
 	g.P("// This is a compile-time assertion to ensure that this generated file")
 	g.P("// is compatible with the tkeel package it is being compiled against.")
-	g.P("// import package.", contextPackage.Ident(""), httpPackage.Ident(""),
+	g.P("// import package.", contextPackage.Ident(""), httpPackage.Ident(""), reflectPackage.Ident(""),
 		restfulPackage.Ident(""), jsonPackage.Ident(""), kitErrorsPackage.Ident(""))
 	g.P("")
 	for _, service := range file.Services {

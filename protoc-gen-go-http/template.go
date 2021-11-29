@@ -61,7 +61,10 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 		resp.WriteErrorString(httpCode, tErr.Message)
 		return
 	}
-
+	if reflect.ValueOf(out).Elem().Type().AssignableTo(reflect.TypeOf(emptypb.Empty{})) {
+		resp.WriteHeader(http.StatusNoContent)
+		return
+	}
 	result, err := json.Marshal(out)
 	if err != nil {
 		resp.WriteErrorString(http.StatusInternalServerError, err.Error())
