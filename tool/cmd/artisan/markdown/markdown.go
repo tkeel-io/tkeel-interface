@@ -27,6 +27,7 @@ var (
 
 func init() {
 	CmdMarkdown.Flags().StringVarP(&swaggerPath, "swagger", "f", "", "swagdown requires exactly one argument, a path to a local swagger file(.json|.yml|.yaml)")
+	CmdMarkdown.Flags().StringVarP(&templatePath, "template", "t", "", "template path, like (markdown/templates/)")
 	CmdMarkdown.Flags().StringVarP(&outputPath, "output", "o", "docs", "output path,  default is stdio")
 	CmdMarkdown.Flags().StringVarP(&mode, "mode", "m", "tag", "mode(all | tag | method)")
 
