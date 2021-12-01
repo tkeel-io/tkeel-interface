@@ -1,0 +1,21 @@
+{
+  "title": "API 参考",
+  "icon": "/reffer.svg",
+  "desc": "为您提供API的有关信息和使用帮助",
+  "chapters": [
+    {
+      "title": "API 列表",
+      "entry": "./beta/zh-CN/api/tag.md"
+    }{{range $code, $tag := .}},
+    {
+      "title": "{{$tag.Tag}} SDK",
+      "entries": [
+    {{range $i, $operation := $tag.Methods}}{{if $i}},{{end}}
+        {
+          "title": "{{$operation.OperationID}}",
+          "entry": "./beta/zh-CN/api/method_{{$operation.OperationID}}.md"
+        }{{end}}
+      ]
+    }{{end}}
+  ]
+}
