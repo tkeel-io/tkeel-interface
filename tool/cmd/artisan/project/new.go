@@ -60,6 +60,6 @@ func (p *Project) New(ctx context.Context, dir string, layout string, branch str
 	fmt.Println(color.WhiteString("$ cd %s", p.Name))
 	fmt.Println(color.WhiteString("$ go generate ./..."))
 	fmt.Println(color.WhiteString("$ go build -o ./bin/ ./... "))
-	fmt.Println(color.WhiteString("$ ./bin/%s -conf ./configs\n", p.Name))
+	fmt.Println(color.WhiteString("$ ./bin/%s\n", p.Name))
 	return nil
 }
