@@ -36,7 +36,7 @@ artisan proto service api/helloworld/v1/helloworld.proto -t pkg/service
 artisan proto server api/helloworld/v1/helloworld.proto
 
 # Generate API's makedown
-artisan markdown -f api/helloworld/v1/helloworld.proto -t third_party/markdown-templates/ -o ./docs/API/Greeter -m all
+artisan markdown -f api/apidocs.swagger.json  -t third_party/markdown-templates/ -o ./docs/API/Greeter -m all
 
 # Run the program
 go run cmd/helloworld/main.go
