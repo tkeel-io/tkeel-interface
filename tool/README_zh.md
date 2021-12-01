@@ -33,6 +33,9 @@ artisan proto service api/helloworld/v1/helloworld.proto -t pkg/service
 # 生成server模板(此输出需要手工加入 cmd/helloworld/main.go 中)
 artisan proto server api/helloworld/v1/helloworld.proto
 
+# 生成 api 的 makedown 文件
+artisan markdown -f api/helloworld/v1/helloworld.proto -t third_party/markdown-templates/ -o ./docs/API/Greeter -m all
+
 # 运行程序
 go run cmd/helloworld/main.go
 ```
