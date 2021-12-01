@@ -32,7 +32,6 @@ func init() {
 	CmdMarkdown.Flags().StringVarP(&mode, "mode", "m", "tag", "mode(all | tag | method)")
 
 	CmdMarkdown.MarkFlagRequired("swaggerPath")
-	CmdMarkdown.MarkFlagRequired("template")
 
 }
 

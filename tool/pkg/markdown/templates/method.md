@@ -57,8 +57,6 @@ description: '{{.Summary}}'
 
 {{range $code, $resp := .Responses}}
 
-#aaaa1 {{$code}}, {{$resp.Schema}}
-
 ### Response  {{$code}}
 
 {{if ne $resp.Schema.Items.Ref  "" }}   
