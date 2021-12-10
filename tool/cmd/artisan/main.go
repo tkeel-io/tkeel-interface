@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
+	"github.com/spf13/cobra"
+	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/markdown"
 	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/project"
 	"github.com/tkeel-io/tkeel-interface/tool/cmd/artisan/proto"
 	"github.com/tkeel-io/tkeel-interface/tool/pkg/version"
-
-	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
@@ -20,6 +20,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(project.CmdNew)
 	rootCmd.AddCommand(proto.CmdProto)
+	rootCmd.AddCommand(markdown.CmdMarkdown)
 }
 
 func main() {
