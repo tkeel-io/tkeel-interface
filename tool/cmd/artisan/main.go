@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
@@ -14,7 +15,7 @@ var rootCmd = &cobra.Command{
 	Use:     "tkeel-tool",
 	Short:   "An elegant toolkit for Go microservices.",
 	Long:    `An elegant toolkit for Go microservices.`,
-	Version: version.Version,
+	Version: fmt.Sprintf("%s [%s %s]", version.Version, version.GitCommit, version.BuildDate),
 }
 
 func init() {

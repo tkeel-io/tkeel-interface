@@ -32,11 +32,9 @@ func init() {
 	CmdMarkdown.Flags().StringVarP(&mode, "mode", "m", "tag", "mode(all | tag | method)")
 
 	CmdMarkdown.MarkFlagRequired("swaggerPath")
-
 }
 
 func run(cmd *cobra.Command, args []string) {
-
 	switch mode {
 	case "tag": // 文档目录
 		Render(swaggerPath, templatePath, outputPath, "tag")

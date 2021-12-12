@@ -30,7 +30,7 @@ func init() {
 	if repoURL = os.Getenv("KRATOS_LAYOUT_REPO"); repoURL == "" {
 		repoURL = "https://github.com/tkeel-io/tkeel-template-go.git"
 	}
-	timeout = "60s"
+	timeout = "3m"
 	CmdNew.Flags().StringVarP(&repoURL, "repo-url", "r", repoURL, "layout repo")
 	CmdNew.Flags().StringVarP(&branch, "branch", "b", branch, "repo branch")
 	CmdNew.Flags().StringVarP(&timeout, "timeout", "t", timeout, "time out")

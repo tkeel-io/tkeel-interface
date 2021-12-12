@@ -67,7 +67,7 @@ func mkdir(path string) error {
 	}
 
 	if !b {
-		err = os.MkdirAll(path, 0755)
+		err = os.MkdirAll(path, 0o755)
 		if err != nil {
 			return err
 		}

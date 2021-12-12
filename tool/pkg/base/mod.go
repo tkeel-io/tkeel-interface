@@ -54,7 +54,7 @@ func TemplateMod() string {
 		cachePath = filepath.Join(gopath, "pkg", "mod")
 	}
 
-	//TODO support GOMODCACHE
+	// TODO support GOMODCACHE
 
 	// $GOPATH/src/github.com/tkeel-io/tkeel-template-go
 	return filepath.Join(gopath, "src", "github.com", "tkeel-io", "tkeel-template-go")

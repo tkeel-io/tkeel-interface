@@ -28,12 +28,12 @@ func New(templatePath, mode string) *Template {
 		funcMap[name] = fn
 	}
 
-	if templatePath == ""{
+	if templatePath == "" {
 		return &Template{
 			mode,
-			template.Must(template.New(fmt.Sprintf("%s.md", mode)).Funcs(funcMap).ParseFS(f,"templates/*")),
+			template.Must(template.New(fmt.Sprintf("%s.md", mode)).Funcs(funcMap).ParseFS(f, "templates/*")),
 		}
-	}else{
+	} else {
 		return &Template{
 			mode,
 			template.Must(template.New(fmt.Sprintf("%s.md", mode)).Funcs(funcMap).ParseGlob(SwagdownTemplates)),
@@ -73,7 +73,7 @@ func renderAPI(tmpl *Template, w Writer, r io.Reader, decode func(data []byte) (
 func renderMethod(tmpl *Template, w Writer, api *API) error {
 	tags := parseTags(api)
 	for _, tag := range tags {
-		//tagName := tag.Tag
+		// tagName := tag.Tag
 		for _, method := range tag.Methods {
 			filename := method.OperationID
 			if filename == "" {
@@ -129,6 +129,3 @@ func parseTags(api *API) map[string]*Tag {
 	}
 	return tags
 }
-
-
-
