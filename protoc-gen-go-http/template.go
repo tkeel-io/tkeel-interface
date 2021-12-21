@@ -77,7 +77,7 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 	}
 
 	resp.WriteHeaderAndJson(http.StatusOK,
-		setResult(http.StatusOK, "", out), "application/json")
+		setResult(http.StatusOK, "ok", out), "application/json")
 }
 
 {{- end}}
