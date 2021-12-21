@@ -9,6 +9,7 @@ import (
 var httpTemplate = `
 {{$svrType := .ServiceType}}
 {{$svrName := .ServiceName}}
+
 type {{.ServiceType}}HTTPServer interface {
 {{- range .MethodSets}}
 	{{.Name}}(context.Context, *{{.Request}}) (*{{.Reply}}, error)
@@ -23,6 +24,14 @@ func new{{.ServiceType}}HTTPHandler(s {{.ServiceType}}HTTPServer) *{{.ServiceTyp
 	return &{{.ServiceType}}HTTPHandler{srv: s}
 }
 
+func setResult(code int,msg string,data interface{}) map[string]interface{} {
+	return map[string]interface{}{
+		"code":code,
+		"msg":msg,
+		"data":data,
+	}
+}
+
 {{- range .MethodSets}}
 
 func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_restful.Response) {
@@ -30,24 +39,28 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 
 	{{- if .HasBody}}
 	if err := transportHTTP.GetBody(req, &in{{.Body}}); err != nil {
-		resp.WriteErrorString(http.StatusBadRequest, err.Error())
+		resp.WriteHeaderAndJson(http.StatusBadRequest,
+			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
 	}
 	{{- if ne .Body ""}}
 	if err := transportHTTP.GetQuery(req, &in); err != nil {
-		resp.WriteErrorString(http.StatusBadRequest, err.Error())
+		resp.WriteHeaderAndJson(http.StatusBadRequest,
+			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
 	}
 	{{- end}}
 	{{- else}}
 	if err := transportHTTP.GetQuery(req, &in); err != nil {
-		resp.WriteErrorString(http.StatusBadRequest, err.Error())
+		resp.WriteHeaderAndJson(http.StatusBadRequest,
+			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
 	}
 	{{- end}}
 	{{- if .HasVars}}
 	if err := transportHTTP.GetPathValue(req, &in); err != nil {
-		resp.WriteErrorString(http.StatusBadRequest, err.Error())
+		resp.WriteHeaderAndJson(http.StatusBadRequest,
+			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
 	}
 	{{- end}}
@@ -58,23 +71,13 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 	if err != nil {
 		tErr := errors.FromError(err)
 		httpCode := errors.GRPCToHTTPStatusCode(tErr.GRPCStatus().Code())
-		resp.WriteErrorString(httpCode, tErr.Message)
+		resp.WriteHeaderAndJson(httpCode,
+			setResult(httpCode, tErr.Message, out), "application/json")
 		return
 	}
-	if reflect.ValueOf(out).Elem().Type().AssignableTo(reflect.TypeOf(emptypb.Empty{})) {
-		resp.WriteHeader(http.StatusNoContent)
-		return
-	}
-	result, err := json.Marshal(out)
-	if err != nil {
-		resp.WriteErrorString(http.StatusInternalServerError, err.Error())
-		return
-	}
-	_, err = resp.Write(result)
-	if err != nil {
-		resp.WriteErrorString(http.StatusInternalServerError, err.Error())
-		return
-	}
+
+	resp.WriteHeaderAndJson(http.StatusOK,
+		setResult(http.StatusOK, "", out), "application/json")
 }
 
 {{- end}}
