@@ -28,12 +28,12 @@ func New(templatePath, mode string) *Template {
 		funcMap[name] = fn
 	}
 
-	if templatePath == ""{
+	if templatePath == "" {
 		return &Template{
 			mode,
-			template.Must(template.New(fmt.Sprintf("%s.md", mode)).Funcs(funcMap).ParseFS(f,"templates/*")),
+			template.Must(template.New(fmt.Sprintf("%s.md", mode)).Funcs(funcMap).ParseFS(f, "templates/*")),
 		}
-	}else{
+	} else {
 		return &Template{
 			mode,
 			template.Must(template.New(fmt.Sprintf("%s.md", mode)).Funcs(funcMap).ParseGlob(SwagdownTemplates)),
@@ -129,6 +129,3 @@ func parseTags(api *API) map[string]*Tag {
 	}
 	return tags
 }
-
-
-

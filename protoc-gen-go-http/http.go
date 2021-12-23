@@ -14,11 +14,18 @@ import (
 )
 
 const (
+	RawDataResponse = "RAW_DATA_RESPONSE"
+)
+
+const (
 	contextPackage       = protogen.GoImportPath("context")
 	httpPackage          = protogen.GoImportPath("net/http")
 	restfulPackage       = protogen.GoImportPath("github.com/emicklei/go-restful")
 	emptypbPackage       = protogen.GoImportPath("google.golang.org/protobuf/types/known/emptypb")
+	anypbPakcage         = protogen.GoImportPath("google.golang.org/protobuf/types/known/anypb")
 	kitErrorsPackage     = protogen.GoImportPath("github.com/tkeel-io/kit/errors")
+	kitResultPackage     = protogen.GoImportPath("github.com/tkeel-io/kit/result")
+	protoJsonPackage     = protogen.GoImportPath("google.golang.org/protobuf/encoding/protojson")
 	transportHTTPPackage = protogen.GoImportPath("github.com/tkeel-io/kit/transport/http")
 )
 
@@ -51,6 +58,7 @@ func generateFileContent(gen *protogen.Plugin, file *protogen.File, g *protogen.
 	g.P("// This is a compile-time assertion to ensure that this generated file")
 	g.P("// is compatible with the tkeel package it is being compiled against.")
 	g.P("// import package.", contextPackage.Ident(""), httpPackage.Ident(""),
+		anypbPakcage.Ident(""), kitResultPackage.Ident(""), protoJsonPackage.Ident(""),
 		restfulPackage.Ident(""), kitErrorsPackage.Ident(""), emptypbPackage.Ident(""))
 	g.P("")
 	for _, service := range file.Services {
@@ -143,17 +151,21 @@ func buildHTTPRule(g *protogen.GeneratedFile, m *protogen.Method, rule *annotati
 	} else if body == "*" {
 		md.HasBody = true
 		md.Body = ""
+		md.BodyFieldName = ""
 	} else if body != "" {
 		md.HasBody = true
 		md.Body = "." + camelCaseVars(body)
+		md.BodyFieldName = body
 	} else {
 		md.HasBody = false
 		_, _ = fmt.Fprintf(os.Stderr, "\u001B[31mWARN\u001B[m: %s %s is does not declare a body.\n", method, path)
 	}
 	if responseBody == "*" {
 		md.ResponseBody = ""
+		md.ResponseBodyFieldName = ""
 	} else if responseBody != "" {
 		md.ResponseBody = "." + camelCaseVars(responseBody)
+		md.ResponseBodyFieldName = responseBody
 	}
 	return md
 }
@@ -184,14 +196,16 @@ func buildMethodDesc(g *protogen.GeneratedFile, m *protogen.Method, method, path
 			}
 		}
 	}
+
 	return &methodDesc{
-		Name:    m.GoName,
-		Num:     methodSets[m.GoName],
-		Request: g.QualifiedGoIdent(m.Input.GoIdent),
-		Reply:   g.QualifiedGoIdent(m.Output.GoIdent),
-		Path:    path,
-		Method:  method,
-		HasVars: len(vars) > 0,
+		Name:            m.GoName,
+		Num:             methodSets[m.GoName],
+		Request:         g.QualifiedGoIdent(m.Input.GoIdent),
+		Reply:           g.QualifiedGoIdent(m.Output.GoIdent),
+		Path:            path,
+		Method:          method,
+		HasVars:         len(vars) > 0,
+		RawDataResponse: (strings.Index(m.Comments.Leading.String(), RawDataResponse) != -1),
 	}
 }
 

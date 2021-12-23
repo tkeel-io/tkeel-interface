@@ -38,7 +38,7 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 	in := {{.Request}}{}
 
 	{{- if .HasBody}}
-	if err := transportHTTP.GetBody(req, &in{{.Body}}); err != nil {
+	if err := transportHTTP.GetBody(req, &in); err != nil {
 		resp.WriteHeaderAndJson(http.StatusBadRequest,
 			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
@@ -75,9 +75,40 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 			setResult(httpCode, tErr.Message, out), "application/json")
 		return
 	}
+	{{- if .RawDataResponse}}
+	resp.WriteHeaderAndJson(http.StatusOK, out, "application/json")
+	{{- else}}	
+	anyOut, err := anypb.New(out)
+	if err != nil {
+		resp.WriteHeaderAndJson(http.StatusInternalServerError,
+			setResult(http.StatusInternalServerError, err.Error(), nil), "application/json")
+		return
+	}
 
-	resp.WriteHeaderAndJson(http.StatusOK,
-		setResult(http.StatusOK, "ok", out), "application/json")
+	outB, err := protojson.Marshal(&result.Http{
+		Code: http.StatusOK,
+		Msg: "ok",
+		Data: anyOut,
+	})
+	if err != nil {
+		resp.WriteHeaderAndJson(http.StatusInternalServerError,
+			setResult(http.StatusInternalServerError, err.Error(), nil), "application/json")
+		return
+	}
+	resp.WriteHeader(http.StatusOK)
+
+	var remain int
+	for {
+		outB = outB[remain:]
+		remain, err = resp.Write(outB)
+		if err != nil {
+			return
+		}
+		if remain == 0 {
+			break
+		}
+	}
+	{{- end}}
 }
 
 {{- end}}
@@ -122,12 +153,16 @@ type methodDesc struct {
 	Request string
 	Reply   string
 	// http_rule
-	Path         string
-	Method       string
-	HasVars      bool
-	HasBody      bool
-	Body         string
-	ResponseBody string
+	Path                  string
+	Method                string
+	HasVars               bool
+	HasBody               bool
+	Body                  string
+	BodyFieldName         string
+	ResponseBody          string
+	ResponseBodyFieldName string
+	// comment
+	RawDataResponse bool
 }
 
 func (s *serviceDesc) execute() string {

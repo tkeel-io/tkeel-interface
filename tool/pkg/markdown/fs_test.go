@@ -23,7 +23,7 @@ import (
 
 func TestList(t *testing.T) {
 	list, err := fs.Glob(f, "templates/*")
-	if err != nil || list == nil || len(list) != 5{
+	if err != nil || list == nil || len(list) != 5 {
 		t.Error("error on fs.Glob")
 	}
 }
