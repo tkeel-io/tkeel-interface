@@ -24,14 +24,6 @@ func new{{.ServiceType}}HTTPHandler(s {{.ServiceType}}HTTPServer) *{{.ServiceTyp
 	return &{{.ServiceType}}HTTPHandler{srv: s}
 }
 
-func setResult(code int,msg string,data interface{}) map[string]interface{} {
-	return map[string]interface{}{
-		"code":code,
-		"msg":msg,
-		"data":data,
-	}
-}
-
 {{- range .MethodSets}}
 
 func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_restful.Response) {
@@ -40,27 +32,27 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 	{{- if .HasBody}}
 	if err := transportHTTP.GetBody(req, &in); err != nil {
 		resp.WriteHeaderAndJson(http.StatusBadRequest,
-			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
+			result.Set(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
 	}
 	{{- if ne .Body ""}}
 	if err := transportHTTP.GetQuery(req, &in); err != nil {
 		resp.WriteHeaderAndJson(http.StatusBadRequest,
-			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
+			result.Set(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
 	}
 	{{- end}}
 	{{- else}}
 	if err := transportHTTP.GetQuery(req, &in); err != nil {
 		resp.WriteHeaderAndJson(http.StatusBadRequest,
-			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
+			result.Set(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
 	}
 	{{- end}}
 	{{- if .HasVars}}
 	if err := transportHTTP.GetPathValue(req, &in); err != nil {
 		resp.WriteHeaderAndJson(http.StatusBadRequest,
-			setResult(http.StatusBadRequest,err.Error(),nil),"application/json")
+			result.Set(http.StatusBadRequest,err.Error(),nil),"application/json")
 		return
 	}
 	{{- end}}
@@ -72,7 +64,7 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 		tErr := errors.FromError(err)
 		httpCode := errors.GRPCToHTTPStatusCode(tErr.GRPCStatus().Code())
 		resp.WriteHeaderAndJson(httpCode,
-			setResult(httpCode, tErr.Message, out), "application/json")
+			result.Set(httpCode, tErr.Message, out), "application/json")
 		return
 	}
 	{{- if .RawDataResponse}}
@@ -81,7 +73,7 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 	anyOut, err := anypb.New(out)
 	if err != nil {
 		resp.WriteHeaderAndJson(http.StatusInternalServerError,
-			setResult(http.StatusInternalServerError, err.Error(), nil), "application/json")
+			result.Set(http.StatusInternalServerError, err.Error(), nil), "application/json")
 		return
 	}
 
@@ -94,7 +86,7 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 	})
 	if err != nil {
 		resp.WriteHeaderAndJson(http.StatusInternalServerError,
-			setResult(http.StatusInternalServerError, err.Error(), nil), "application/json")
+			result.Set(http.StatusInternalServerError, err.Error(), nil), "application/json")
 		return
 	}
 	resp.WriteHeader(http.StatusOK)
