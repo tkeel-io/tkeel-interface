@@ -61,6 +61,11 @@ func generateFileContent(gen *protogen.Plugin, file *protogen.File, g *protogen.
 		anypbPakcage.Ident(""), kitResultPackage.Ident(""), protoJsonPackage.Ident(""),
 		restfulPackage.Ident(""), kitErrorsPackage.Ident(""), emptypbPackage.Ident(""))
 	g.P("")
+	g.P("var (")
+	g.P("	 _ = ", protoJsonPackage.Ident("MarshalOptions{}"))
+	g.P("	 _ = ", anypbPakcage.Ident("Any{}"))
+	g.P("	 _ = ", emptypbPackage.Ident("Empty{}"))
+	g.P(")")
 	for _, service := range file.Services {
 		genService(gen, file, g, service, omitempty)
 	}
