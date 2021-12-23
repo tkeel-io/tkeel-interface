@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10v1/openapi.proto\x12\nopenapi.v1\"7\n\x06Result\x12 \n\x03ret\x18\x01 \x01(\x0e\x32\x13.openapi.v1.Retcode\x12\x0b\n\x03msg\x18\x02 \x01(\t\".\n\x0f\x42riefPluginInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\")\n\x0b\x41\x64\x64onsPoint\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x65sc\x18\x02 \x01(\t\"G\n\x11ImplementedAddons\x12\x14\n\x0c\x61\x64\x64ons_point\x18\x01 \x01(\t\x12\x1c\n\x14implemented_endpoint\x18\x02 \x01(\t\"o\n\x11ImplementedPlugin\x12+\n\x06plugin\x18\x01 \x01(\x0b\x32\x1b.openapi.v1.BriefPluginInfo\x12-\n\x06\x61\x64\x64ons\x18\x02 \x03(\x0b\x32\x1d.openapi.v1.ImplementedAddons\"S\n\x0c\x43onsoleEntry\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04path\x18\x03 \x01(\t\x12\r\n\x05\x65ntry\x18\x04 \x01(\t\x12\x0c\n\x04menu\x18\x05 \x03(\t\"\x83\x02\n\x10IdentifyResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\x12\x11\n\tplugin_id\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x15\n\rtkeel_version\x18\x04 \x01(\t\x12-\n\x0c\x61\x64\x64ons_point\x18\x05 \x03(\x0b\x32\x17.openapi.v1.AddonsPoint\x12\x39\n\x12implemented_plugin\x18\x06 \x03(\x0b\x32\x1d.openapi.v1.ImplementedPlugin\x12)\n\x07\x65ntries\x18\x07 \x03(\x0b\x32\x18.openapi.v1.ConsoleEntry\"\x7f\n\x15\x41\x64\x64onsIdentifyRequest\x12+\n\x06plugin\x18\x01 \x01(\x0b\x32\x1b.openapi.v1.BriefPluginInfo\x12\x39\n\x12implemented_addons\x18\x02 \x03(\x0b\x32\x1d.openapi.v1.ImplementedAddons\"9\n\x16\x41\x64\x64onsIdentifyResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"4\n\x10TenantBindRequst\x12\x11\n\ttenant_id\x18\x01 \x01(\t\x12\r\n\x05\x65xtra\x18\x02 \x01(\x0c\"5\n\x12TenantBindResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"6\n\x12TenantUnbindRequst\x12\x11\n\ttenant_id\x18\x01 \x01(\t\x12\r\n\x05\x65xtra\x18\x02 \x01(\x0c\"7\n\x14TenantUnbindResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"[\n\x0eStatusResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\x12(\n\x06status\x18\x02 \x01(\x0e\x32\x18.openapi.v1.PluginStatus*8\n\x07Retcode\x12\x06\n\x02OK\x10\x00\x12\x10\n\x0b\x42\x41\x44_REQEUST\x10\x90\x03\x12\x13\n\x0eINTERNAL_ERROR\x10\xf4\x03*Q\n\x0cPluginStatus\x12\t\n\x05\x45RROR\x10\x00\x12\x0e\n\nUNREGISTER\x10\x01\x12\x0c\n\x08REGISTER\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0b\n\x07STOPPED\x10\x04\x42\x33Z1github.com/tkeel-io/tkeel-interface/openapi/v1;v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10v1/openapi.proto\x12\nopenapi.v1\"7\n\x06Result\x12 \n\x03ret\x18\x01 \x01(\x0e\x32\x13.openapi.v1.Retcode\x12\x0b\n\x03msg\x18\x02 \x01(\t\".\n\x0f\x42riefPluginInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\")\n\x0b\x41\x64\x64onsPoint\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x65sc\x18\x02 \x01(\t\"G\n\x11ImplementedAddons\x12\x14\n\x0c\x61\x64\x64ons_point\x18\x01 \x01(\t\x12\x1c\n\x14implemented_endpoint\x18\x02 \x01(\t\"o\n\x11ImplementedPlugin\x12+\n\x06plugin\x18\x01 \x01(\x0b\x32\x1b.openapi.v1.BriefPluginInfo\x12-\n\x06\x61\x64\x64ons\x18\x02 \x03(\x0b\x32\x1d.openapi.v1.ImplementedAddons\"\x7f\n\x0c\x43onsoleEntry\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04icon\x18\x03 \x01(\t\x12\x0c\n\x04path\x18\x04 \x01(\t\x12\r\n\x05\x65ntry\x18\x05 \x01(\t\x12*\n\x08\x63hildren\x18\x06 \x03(\x0b\x32\x18.openapi.v1.ConsoleEntry\"\x83\x02\n\x10IdentifyResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\x12\x11\n\tplugin_id\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x15\n\rtkeel_version\x18\x04 \x01(\t\x12-\n\x0c\x61\x64\x64ons_point\x18\x05 \x03(\x0b\x32\x17.openapi.v1.AddonsPoint\x12\x39\n\x12implemented_plugin\x18\x06 \x03(\x0b\x32\x1d.openapi.v1.ImplementedPlugin\x12)\n\x07\x65ntries\x18\x07 \x03(\x0b\x32\x18.openapi.v1.ConsoleEntry\"\x7f\n\x15\x41\x64\x64onsIdentifyRequest\x12+\n\x06plugin\x18\x01 \x01(\x0b\x32\x1b.openapi.v1.BriefPluginInfo\x12\x39\n\x12implemented_addons\x18\x02 \x03(\x0b\x32\x1d.openapi.v1.ImplementedAddons\"9\n\x16\x41\x64\x64onsIdentifyResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"4\n\x10TenantBindRequst\x12\x11\n\ttenant_id\x18\x01 \x01(\t\x12\r\n\x05\x65xtra\x18\x02 \x01(\x0c\"5\n\x12TenantBindResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"6\n\x12TenantUnbindRequst\x12\x11\n\ttenant_id\x18\x01 \x01(\t\x12\r\n\x05\x65xtra\x18\x02 \x01(\x0c\"7\n\x14TenantUnbindResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"[\n\x0eStatusResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\x12(\n\x06status\x18\x02 \x01(\x0e\x32\x18.openapi.v1.PluginStatus*8\n\x07Retcode\x12\x06\n\x02OK\x10\x00\x12\x10\n\x0b\x42\x41\x44_REQEUST\x10\x90\x03\x12\x13\n\x0eINTERNAL_ERROR\x10\xf4\x03*Q\n\x0cPluginStatus\x12\t\n\x05\x45RROR\x10\x00\x12\x0e\n\nUNREGISTER\x10\x01\x12\x0c\n\x08REGISTER\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0b\n\x07STOPPED\x10\x04\x42\x33Z1github.com/tkeel-io/tkeel-interface/openapi/v1;v1b\x06proto3')
 
 _RETCODE = DESCRIPTOR.enum_types_by_name['Retcode']
 Retcode = enum_type_wrapper.EnumTypeWrapper(_RETCODE)
@@ -147,10 +147,10 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'Z1github.com/tkeel-io/tkeel-interface/openapi/v1;v1'
-  _RETCODE._serialized_start=1216
-  _RETCODE._serialized_end=1272
-  _PLUGINSTATUS._serialized_start=1274
-  _PLUGINSTATUS._serialized_end=1355
+  _RETCODE._serialized_start=1260
+  _RETCODE._serialized_end=1316
+  _PLUGINSTATUS._serialized_start=1318
+  _PLUGINSTATUS._serialized_end=1399
   _RESULT._serialized_start=32
   _RESULT._serialized_end=87
   _BRIEFPLUGININFO._serialized_start=89
@@ -162,21 +162,21 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _IMPLEMENTEDPLUGIN._serialized_start=253
   _IMPLEMENTEDPLUGIN._serialized_end=364
   _CONSOLEENTRY._serialized_start=366
-  _CONSOLEENTRY._serialized_end=449
-  _IDENTIFYRESPONSE._serialized_start=452
-  _IDENTIFYRESPONSE._serialized_end=711
-  _ADDONSIDENTIFYREQUEST._serialized_start=713
-  _ADDONSIDENTIFYREQUEST._serialized_end=840
-  _ADDONSIDENTIFYRESPONSE._serialized_start=842
-  _ADDONSIDENTIFYRESPONSE._serialized_end=899
-  _TENANTBINDREQUST._serialized_start=901
-  _TENANTBINDREQUST._serialized_end=953
-  _TENANTBINDRESPONSE._serialized_start=955
-  _TENANTBINDRESPONSE._serialized_end=1008
-  _TENANTUNBINDREQUST._serialized_start=1010
-  _TENANTUNBINDREQUST._serialized_end=1064
-  _TENANTUNBINDRESPONSE._serialized_start=1066
-  _TENANTUNBINDRESPONSE._serialized_end=1121
-  _STATUSRESPONSE._serialized_start=1123
-  _STATUSRESPONSE._serialized_end=1214
+  _CONSOLEENTRY._serialized_end=493
+  _IDENTIFYRESPONSE._serialized_start=496
+  _IDENTIFYRESPONSE._serialized_end=755
+  _ADDONSIDENTIFYREQUEST._serialized_start=757
+  _ADDONSIDENTIFYREQUEST._serialized_end=884
+  _ADDONSIDENTIFYRESPONSE._serialized_start=886
+  _ADDONSIDENTIFYRESPONSE._serialized_end=943
+  _TENANTBINDREQUST._serialized_start=945
+  _TENANTBINDREQUST._serialized_end=997
+  _TENANTBINDRESPONSE._serialized_start=999
+  _TENANTBINDRESPONSE._serialized_end=1052
+  _TENANTUNBINDREQUST._serialized_start=1054
+  _TENANTUNBINDREQUST._serialized_end=1108
+  _TENANTUNBINDRESPONSE._serialized_start=1110
+  _TENANTUNBINDRESPONSE._serialized_end=1165
+  _STATUSRESPONSE._serialized_start=1167
+  _STATUSRESPONSE._serialized_end=1258
 # @@protoc_insertion_point(module_scope)
