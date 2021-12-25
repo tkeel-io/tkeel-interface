@@ -1,12 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
 
+	"github.com/golang/glog"
 	"google.golang.org/protobuf/reflect/protoreflect"
-
 	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
@@ -14,8 +15,37 @@ import (
 )
 
 const (
-	RawDataResponse = "RAW_DATA_RESPONSE"
+	TKEELCOMMENT = "TKEEL_COMMENT"
+
+	RawDataField = "raw_data"
 )
+
+type tkeelComment struct {
+	Response map[string]interface{} `json:"response"`
+	Request  map[string]interface{} `json:"request"`
+}
+
+func (c *tkeelComment) FromComment(s string) bool {
+	var b []byte
+	f := false
+	for _, line := range strings.Split(strings.TrimSuffix(string(s), "\n"), "\n") {
+		if f == true {
+			n := strings.TrimPrefix(line, "//")
+			b = append(b, n...)
+		} else if strings.TrimSpace(strings.TrimPrefix(line, "//")) == TKEELCOMMENT {
+			f = true
+		}
+	}
+	if !f {
+		return false
+	}
+	err := json.Unmarshal(b, c)
+	if err != nil {
+		glog.Fatalf("unmarshal tkeel comment(%s) err: %s", string(b), err)
+		return false
+	}
+	return true
+}
 
 const (
 	contextPackage       = protogen.GoImportPath("context")
@@ -202,16 +232,28 @@ func buildMethodDesc(g *protogen.GeneratedFile, m *protogen.Method, method, path
 		}
 	}
 
-	return &methodDesc{
-		Name:            m.GoName,
-		Num:             methodSets[m.GoName],
-		Request:         g.QualifiedGoIdent(m.Input.GoIdent),
-		Reply:           g.QualifiedGoIdent(m.Output.GoIdent),
-		Path:            path,
-		Method:          method,
-		HasVars:         len(vars) > 0,
-		RawDataResponse: (strings.Index(m.Comments.Leading.String(), RawDataResponse) != -1),
+	mRet := &methodDesc{
+		Name:    m.GoName,
+		Num:     methodSets[m.GoName],
+		Request: g.QualifiedGoIdent(m.Input.GoIdent),
+		Reply:   g.QualifiedGoIdent(m.Output.GoIdent),
+		Path:    path,
+		Method:  method,
+		HasVars: len(vars) > 0,
 	}
+
+	m.Comments.Leading.String()
+	cArg := new(tkeelComment)
+	if cArg.FromComment(m.Comments.Leading.String()) {
+		rdi, ok := cArg.Response[RawDataField]
+		if ok {
+			rd, ok := rdi.(bool)
+			if ok {
+				mRet.RawDataResponse = rd
+			}
+		}
+	}
+	return mRet
 }
 
 func buildPathVars(method *protogen.Method, path string) (res []string) {
