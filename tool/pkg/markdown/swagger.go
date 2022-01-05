@@ -38,6 +38,7 @@ func FilterSchema(schema string) string {
 func CollectSchema(definitions map[string]Definition, schema string) SchemaContext {
 	schema = strings.Replace(schema, "#/definitions/", "", 1)
 	return SchemaContext{
+		schema,
 		definitions,
 		definitions[schema],
 	}
@@ -138,6 +139,7 @@ type Definition struct {
 }
 
 type SchemaContext struct {
+	TopRef      string
 	Definitions map[string]Definition
 	Definition  Definition
 }
