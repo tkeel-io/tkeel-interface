@@ -6,18 +6,26 @@
 | {{$code}} | {{$resp.Type}} | {{$resp.Description}} |  {{end}} {{end}}
 
 {{$definitions := .Definitions}}
-{{range $code, $resp := .Definition.Properties}}  
-    {{if eq $resp.Type  "array" }}   
-        {{if ne $resp.Items.Ref  "" }} 
-### {{FilterSchema $resp.Items.Ref}}
+{{- range $code, $resp := .Definition.Properties -}}  
+    {{- if eq $resp.Type  "array" -}}   
+        {{- if ne $resp.Items.Ref  "" -}}
+            {{- $nextRefName := (FilterSchema $resp.Items.Ref) -}}
+            {{- if ne $nextRefName $.TopRef -}}
+### {{$nextRefName}}
 {{template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
-        {{end}}  
-    {{else if eq $resp.Type  "object"}}
-        {{if ne $resp.Ref  "" }} 
-### {{FilterSchema $resp.Ref}}
+            {{- end -}}
+        {{- end -}}  
+    {{- else if eq $resp.Type  "object" -}}
+        {{- if ne $resp.Ref  ""  -}}
+            {{- $nextRefName := (FilterSchema $resp.Items.Ref) -}}
+            {{- if ne $nextRefName $.TopRef -}}
+### {{$nextRefName}}
 {{template "schema.md" CollectSchema $definitions  $resp.Ref}}
-        {{end}}  
-    {{end}} 
- {{end}}
+            {{- end -}}
+        {{- end -}}  
+    {{- end -}} 
+ {{- end -}}
+
+ 
  
 

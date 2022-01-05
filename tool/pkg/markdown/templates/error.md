@@ -9,4 +9,4 @@ description: '错误码列表'
 | Name |  Description | 
 | ---- |  ----------- | 
 {{range $code, $desc := .}}|{{$code}}|{{$desc}}| 
-{{end}}
+{{- end -}}
