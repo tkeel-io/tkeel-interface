@@ -79,6 +79,7 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 
 	outB, err := protojson.MarshalOptions{
 		UseProtoNames: true,
+		EmitUnpopulated: true,
 	}.Marshal(&result.Http{
 		Code: http.StatusOK,
 		Msg: "ok",
