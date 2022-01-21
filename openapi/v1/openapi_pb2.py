@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10v1/openapi.proto\x12\nopenapi.v1\"7\n\x06Result\x12 \n\x03ret\x18\x01 \x01(\x0e\x32\x13.openapi.v1.Retcode\x12\x0b\n\x03msg\x18\x02 \x01(\t\".\n\x0f\x42riefPluginInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\")\n\x0b\x41\x64\x64onsPoint\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x65sc\x18\x02 \x01(\t\"G\n\x11ImplementedAddons\x12\x14\n\x0c\x61\x64\x64ons_point\x18\x01 \x01(\t\x12\x1c\n\x14implemented_endpoint\x18\x02 \x01(\t\"o\n\x11ImplementedPlugin\x12+\n\x06plugin\x18\x01 \x01(\x0b\x32\x1b.openapi.v1.BriefPluginInfo\x12-\n\x06\x61\x64\x64ons\x18\x02 \x03(\x0b\x32\x1d.openapi.v1.ImplementedAddons\"\x7f\n\x0c\x43onsoleEntry\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04icon\x18\x03 \x01(\t\x12\x0c\n\x04path\x18\x04 \x01(\t\x12\r\n\x05\x65ntry\x18\x05 \x01(\t\x12*\n\x08\x63hildren\x18\x06 \x03(\x0b\x32\x18.openapi.v1.ConsoleEntry\"\x83\x02\n\x10IdentifyResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\x12\x11\n\tplugin_id\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x15\n\rtkeel_version\x18\x04 \x01(\t\x12-\n\x0c\x61\x64\x64ons_point\x18\x05 \x03(\x0b\x32\x17.openapi.v1.AddonsPoint\x12\x39\n\x12implemented_plugin\x18\x06 \x03(\x0b\x32\x1d.openapi.v1.ImplementedPlugin\x12)\n\x07\x65ntries\x18\x07 \x03(\x0b\x32\x18.openapi.v1.ConsoleEntry\"\x7f\n\x15\x41\x64\x64onsIdentifyRequest\x12+\n\x06plugin\x18\x01 \x01(\x0b\x32\x1b.openapi.v1.BriefPluginInfo\x12\x39\n\x12implemented_addons\x18\x02 \x03(\x0b\x32\x1d.openapi.v1.ImplementedAddons\"9\n\x16\x41\x64\x64onsIdentifyResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"4\n\x10TenantBindRequst\x12\x11\n\ttenant_id\x18\x01 \x01(\t\x12\r\n\x05\x65xtra\x18\x02 \x01(\x0c\"5\n\x12TenantBindResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"6\n\x12TenantUnbindRequst\x12\x11\n\ttenant_id\x18\x01 \x01(\t\x12\r\n\x05\x65xtra\x18\x02 \x01(\x0c\"7\n\x14TenantUnbindResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"[\n\x0eStatusResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\x12(\n\x06status\x18\x02 \x01(\x0e\x32\x18.openapi.v1.PluginStatus*8\n\x07Retcode\x12\x06\n\x02OK\x10\x00\x12\x10\n\x0b\x42\x41\x44_REQEUST\x10\x90\x03\x12\x13\n\x0eINTERNAL_ERROR\x10\xf4\x03*Q\n\x0cPluginStatus\x12\t\n\x05\x45RROR\x10\x00\x12\x0e\n\nUNREGISTER\x10\x01\x12\x0c\n\x08REGISTER\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0b\n\x07STOPPED\x10\x04\x42\x33Z1github.com/tkeel-io/tkeel-interface/openapi/v1;v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10v1/openapi.proto\x12\nopenapi.v1\"7\n\x06Result\x12 \n\x03ret\x18\x01 \x01(\x0e\x32\x13.openapi.v1.Retcode\x12\x0b\n\x03msg\x18\x02 \x01(\t\".\n\x0f\x42riefPluginInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\")\n\x0b\x41\x64\x64onsPoint\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x65sc\x18\x02 \x01(\t\"G\n\x11ImplementedAddons\x12\x14\n\x0c\x61\x64\x64ons_point\x18\x01 \x01(\t\x12\x1c\n\x14implemented_endpoint\x18\x02 \x01(\t\"o\n\x11ImplementedPlugin\x12+\n\x06plugin\x18\x01 \x01(\x0b\x32\x1b.openapi.v1.BriefPluginInfo\x12-\n\x06\x61\x64\x64ons\x18\x02 \x03(\x0b\x32\x1d.openapi.v1.ImplementedAddons\"\x7f\n\x0c\x43onsoleEntry\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04icon\x18\x03 \x01(\t\x12\x0c\n\x04path\x18\x04 \x01(\t\x12\r\n\x05\x65ntry\x18\x05 \x01(\t\x12*\n\x08\x63hildren\x18\x06 \x03(\x0b\x32\x18.openapi.v1.ConsoleEntry\"\x83\x02\n\x10IdentifyResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\x12\x11\n\tplugin_id\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x15\n\rtkeel_version\x18\x04 \x01(\t\x12-\n\x0c\x61\x64\x64ons_point\x18\x05 \x03(\x0b\x32\x17.openapi.v1.AddonsPoint\x12\x39\n\x12implemented_plugin\x18\x06 \x03(\x0b\x32\x1d.openapi.v1.ImplementedPlugin\x12)\n\x07\x65ntries\x18\x07 \x03(\x0b\x32\x18.openapi.v1.ConsoleEntry\"\x7f\n\x15\x41\x64\x64onsIdentifyRequest\x12+\n\x06plugin\x18\x01 \x01(\x0b\x32\x1b.openapi.v1.BriefPluginInfo\x12\x39\n\x12implemented_addons\x18\x02 \x03(\x0b\x32\x1d.openapi.v1.ImplementedAddons\"9\n\x16\x41\x64\x64onsIdentifyResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"6\n\x12TenantEnableRequst\x12\x11\n\ttenant_id\x18\x01 \x01(\t\x12\r\n\x05\x65xtra\x18\x02 \x01(\x0c\"7\n\x14TenantEnableResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"7\n\x13TenantDisableRequst\x12\x11\n\ttenant_id\x18\x01 \x01(\t\x12\r\n\x05\x65xtra\x18\x02 \x01(\x0c\"8\n\x15TenantDisableResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\"[\n\x0eStatusResponse\x12\x1f\n\x03res\x18\x01 \x01(\x0b\x32\x12.openapi.v1.Result\x12(\n\x06status\x18\x02 \x01(\x0e\x32\x18.openapi.v1.PluginStatus*8\n\x07Retcode\x12\x06\n\x02OK\x10\x00\x12\x10\n\x0b\x42\x41\x44_REQEUST\x10\x90\x03\x12\x13\n\x0eINTERNAL_ERROR\x10\xf4\x03*L\n\x0cPluginStatus\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x10\n\x0cWAIT_RUNNING\x10\x01\x12\x10\n\x0c\x45RR_REGISTER\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x42\x33Z1github.com/tkeel-io/tkeel-interface/openapi/v1;v1b\x06proto3')
 
 _RETCODE = DESCRIPTOR.enum_types_by_name['Retcode']
 Retcode = enum_type_wrapper.EnumTypeWrapper(_RETCODE)
@@ -24,11 +24,10 @@ PluginStatus = enum_type_wrapper.EnumTypeWrapper(_PLUGINSTATUS)
 OK = 0
 BAD_REQEUST = 400
 INTERNAL_ERROR = 500
-ERROR = 0
-UNREGISTER = 1
-REGISTER = 2
+UNKNOWN = 0
+WAIT_RUNNING = 1
+ERR_REGISTER = 2
 RUNNING = 3
-STOPPED = 4
 
 
 _RESULT = DESCRIPTOR.message_types_by_name['Result']
@@ -40,10 +39,10 @@ _CONSOLEENTRY = DESCRIPTOR.message_types_by_name['ConsoleEntry']
 _IDENTIFYRESPONSE = DESCRIPTOR.message_types_by_name['IdentifyResponse']
 _ADDONSIDENTIFYREQUEST = DESCRIPTOR.message_types_by_name['AddonsIdentifyRequest']
 _ADDONSIDENTIFYRESPONSE = DESCRIPTOR.message_types_by_name['AddonsIdentifyResponse']
-_TENANTBINDREQUST = DESCRIPTOR.message_types_by_name['TenantBindRequst']
-_TENANTBINDRESPONSE = DESCRIPTOR.message_types_by_name['TenantBindResponse']
-_TENANTUNBINDREQUST = DESCRIPTOR.message_types_by_name['TenantUnbindRequst']
-_TENANTUNBINDRESPONSE = DESCRIPTOR.message_types_by_name['TenantUnbindResponse']
+_TENANTENABLEREQUST = DESCRIPTOR.message_types_by_name['TenantEnableRequst']
+_TENANTENABLERESPONSE = DESCRIPTOR.message_types_by_name['TenantEnableResponse']
+_TENANTDISABLEREQUST = DESCRIPTOR.message_types_by_name['TenantDisableRequst']
+_TENANTDISABLERESPONSE = DESCRIPTOR.message_types_by_name['TenantDisableResponse']
 _STATUSRESPONSE = DESCRIPTOR.message_types_by_name['StatusResponse']
 Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,), {
   'DESCRIPTOR' : _RESULT,
@@ -108,33 +107,33 @@ AddonsIdentifyResponse = _reflection.GeneratedProtocolMessageType('AddonsIdentif
   })
 _sym_db.RegisterMessage(AddonsIdentifyResponse)
 
-TenantBindRequst = _reflection.GeneratedProtocolMessageType('TenantBindRequst', (_message.Message,), {
-  'DESCRIPTOR' : _TENANTBINDREQUST,
+TenantEnableRequst = _reflection.GeneratedProtocolMessageType('TenantEnableRequst', (_message.Message,), {
+  'DESCRIPTOR' : _TENANTENABLEREQUST,
   '__module__' : 'v1.openapi_pb2'
-  # @@protoc_insertion_point(class_scope:openapi.v1.TenantBindRequst)
+  # @@protoc_insertion_point(class_scope:openapi.v1.TenantEnableRequst)
   })
-_sym_db.RegisterMessage(TenantBindRequst)
+_sym_db.RegisterMessage(TenantEnableRequst)
 
-TenantBindResponse = _reflection.GeneratedProtocolMessageType('TenantBindResponse', (_message.Message,), {
-  'DESCRIPTOR' : _TENANTBINDRESPONSE,
+TenantEnableResponse = _reflection.GeneratedProtocolMessageType('TenantEnableResponse', (_message.Message,), {
+  'DESCRIPTOR' : _TENANTENABLERESPONSE,
   '__module__' : 'v1.openapi_pb2'
-  # @@protoc_insertion_point(class_scope:openapi.v1.TenantBindResponse)
+  # @@protoc_insertion_point(class_scope:openapi.v1.TenantEnableResponse)
   })
-_sym_db.RegisterMessage(TenantBindResponse)
+_sym_db.RegisterMessage(TenantEnableResponse)
 
-TenantUnbindRequst = _reflection.GeneratedProtocolMessageType('TenantUnbindRequst', (_message.Message,), {
-  'DESCRIPTOR' : _TENANTUNBINDREQUST,
+TenantDisableRequst = _reflection.GeneratedProtocolMessageType('TenantDisableRequst', (_message.Message,), {
+  'DESCRIPTOR' : _TENANTDISABLEREQUST,
   '__module__' : 'v1.openapi_pb2'
-  # @@protoc_insertion_point(class_scope:openapi.v1.TenantUnbindRequst)
+  # @@protoc_insertion_point(class_scope:openapi.v1.TenantDisableRequst)
   })
-_sym_db.RegisterMessage(TenantUnbindRequst)
+_sym_db.RegisterMessage(TenantDisableRequst)
 
-TenantUnbindResponse = _reflection.GeneratedProtocolMessageType('TenantUnbindResponse', (_message.Message,), {
-  'DESCRIPTOR' : _TENANTUNBINDRESPONSE,
+TenantDisableResponse = _reflection.GeneratedProtocolMessageType('TenantDisableResponse', (_message.Message,), {
+  'DESCRIPTOR' : _TENANTDISABLERESPONSE,
   '__module__' : 'v1.openapi_pb2'
-  # @@protoc_insertion_point(class_scope:openapi.v1.TenantUnbindResponse)
+  # @@protoc_insertion_point(class_scope:openapi.v1.TenantDisableResponse)
   })
-_sym_db.RegisterMessage(TenantUnbindResponse)
+_sym_db.RegisterMessage(TenantDisableResponse)
 
 StatusResponse = _reflection.GeneratedProtocolMessageType('StatusResponse', (_message.Message,), {
   'DESCRIPTOR' : _STATUSRESPONSE,
@@ -147,10 +146,10 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'Z1github.com/tkeel-io/tkeel-interface/openapi/v1;v1'
-  _RETCODE._serialized_start=1260
-  _RETCODE._serialized_end=1316
-  _PLUGINSTATUS._serialized_start=1318
-  _PLUGINSTATUS._serialized_end=1399
+  _RETCODE._serialized_start=1266
+  _RETCODE._serialized_end=1322
+  _PLUGINSTATUS._serialized_start=1324
+  _PLUGINSTATUS._serialized_end=1400
   _RESULT._serialized_start=32
   _RESULT._serialized_end=87
   _BRIEFPLUGININFO._serialized_start=89
@@ -169,14 +168,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _ADDONSIDENTIFYREQUEST._serialized_end=884
   _ADDONSIDENTIFYRESPONSE._serialized_start=886
   _ADDONSIDENTIFYRESPONSE._serialized_end=943
-  _TENANTBINDREQUST._serialized_start=945
-  _TENANTBINDREQUST._serialized_end=997
-  _TENANTBINDRESPONSE._serialized_start=999
-  _TENANTBINDRESPONSE._serialized_end=1052
-  _TENANTUNBINDREQUST._serialized_start=1054
-  _TENANTUNBINDREQUST._serialized_end=1108
-  _TENANTUNBINDRESPONSE._serialized_start=1110
-  _TENANTUNBINDRESPONSE._serialized_end=1165
-  _STATUSRESPONSE._serialized_start=1167
-  _STATUSRESPONSE._serialized_end=1258
+  _TENANTENABLEREQUST._serialized_start=945
+  _TENANTENABLEREQUST._serialized_end=999
+  _TENANTENABLERESPONSE._serialized_start=1001
+  _TENANTENABLERESPONSE._serialized_end=1056
+  _TENANTDISABLEREQUST._serialized_start=1058
+  _TENANTDISABLEREQUST._serialized_end=1113
+  _TENANTDISABLERESPONSE._serialized_start=1115
+  _TENANTDISABLERESPONSE._serialized_end=1171
+  _STATUSRESPONSE._serialized_start=1173
+  _STATUSRESPONSE._serialized_end=1264
 # @@protoc_insertion_point(module_scope)
