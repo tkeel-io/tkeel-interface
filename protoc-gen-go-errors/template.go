@@ -36,7 +36,11 @@ var {{.LowerCamelValue}} *errors.TError
 
 func init() {
 {{- range .Errors }}
+{{- if eq .Msg "" }}
 {{.LowerCamelValue}} = errors.New(int(codes.{{.Code}}), "{{.Key}}", {{.Name}}_{{.Value}}.String())
+{{- else }}
+{{.LowerCamelValue}} = errors.New(int(codes.{{.Code}}), "{{.Key}}", "{{.Msg}}")
+{{- end }}
 errors.Register({{.LowerCamelValue}})
 {{- end }}
 }
@@ -52,6 +56,7 @@ type errorInfo struct {
 	Name            string
 	Value           string
 	Code            string
+	Msg             string
 	UpperCamelValue string
 	LowerCamelValue string
 	Key             string
