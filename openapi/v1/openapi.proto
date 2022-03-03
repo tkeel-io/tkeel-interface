@@ -115,6 +115,7 @@ message IdentifyResponse {
   repeated BriefPluginInfo dependence =
       8; // dependent plugins.Dependencies must be all installed to install.
   repeated Permission permissions = 9; // plugins define permissions.
+  bool tenant_manual_enable = 10;      // plugins need tenant manual enable.
 }
 
 /**
