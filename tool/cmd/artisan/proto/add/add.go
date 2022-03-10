@@ -29,14 +29,27 @@ func run(cmd *cobra.Command, args []string) {
 	fileName := input[n+1:]
 	pkgName := strings.ReplaceAll(path, "/", ".")
 
-	p := &Proto{
-		Name:        fileName,
-		Path:        path,
-		Package:     pkgName,
-		GoPackage:   goPackage(path),
-		JavaPackage: javaPackage(pkgName),
-		Service:     serviceName(fileName),
+	var p Proto
+	switch fileName {
+	case "error.proto":
+		p = &ErrorProto{
+			Name:        fileName,
+			Path:        path,
+			Package:     pkgName,
+			GoPackage:   goPackage(path),
+			JavaPackage: javaPackage(pkgName),
+		}
+	default:
+		p = &APIProto{
+			Name:        fileName,
+			Path:        path,
+			Package:     pkgName,
+			GoPackage:   goPackage(path),
+			JavaPackage: javaPackage(pkgName),
+			Service:     serviceName(fileName),
+		}
 	}
+
 	if err := p.Generate(); err != nil {
 		fmt.Println(err)
 		return
