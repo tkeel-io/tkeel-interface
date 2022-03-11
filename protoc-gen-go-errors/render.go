@@ -95,6 +95,9 @@ func generationErrorsSection(gen *protogen.Plugin, file *protogen.File, g *proto
 			Msg:             eMsg.val,
 			Key:             string(v.Desc.FullName()),
 		}
+		if err.Code == "Ok" {
+			err.Code = "OK"
+		}
 		ew.Errors = append(ew.Errors, err)
 	}
 	if len(ew.Errors) == 0 {
