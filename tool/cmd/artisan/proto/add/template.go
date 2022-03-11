@@ -1,11 +1,5 @@
 package add
 
-import (
-	"bytes"
-	"strings"
-	"text/template"
-)
-
 const protoTemplate = `
 {{$srvPath := .Service | toLower}}
 syntax = "proto3";
@@ -68,17 +62,40 @@ message List{{.Service}}Request {}
 message List{{.Service}}Response { repeated {{.Service}}Object objList = 1; }
 `
 
-func (p *Proto) execute() ([]byte, error) {
-	funcMap := template.FuncMap{
-		"toLower": strings.ToLower,
-	}
-	buf := new(bytes.Buffer)
-	tmpl, err := template.New("proto").Funcs(funcMap).Parse(strings.TrimSpace(protoTemplate))
-	if err != nil {
-		return nil, err
-	}
-	if err := tmpl.Execute(buf, p); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
+const errTemplate = `
+syntax = "proto3";
+
+package {{.Package}};
+
+option go_package = "{{.GoPackage}}";
+option java_multiple_files = true;
+option java_package = "{{.JavaPackage}}";
+
+// @plugins=protoc-gen-go-errors
+// 错误
+enum Error {
+  // @msg=未知类型
+  // @code=UNKNOWN
+  ERR_UNKNOWN = 0;
+
+  // @msg=成功
+  // @code=OK
+  ERR_OK_STATUS = 1;
+
+  // @msg=未找到资源
+  // @code=NOT_FOUND
+  ERR_NOT_FOUND = 2;
+
+  // @msg=请求参数无效
+  // @code=INVALID_ARGUMENT
+  ERR_INVALID_ARGUMENT = 3;
+
+  // @msg=请求后端存储错误
+  // @code=INTERNAL
+  ERR_INTERNAL_STORE = 4;
+
+  // @msg=内部错误
+  // @code=INTERNAL
+  ERR_INTERNAL_ERROR = 5;
 }
+`
