@@ -190,16 +190,6 @@ message StatusResponse {
 message ProfileItem {
   string key = 1;
   string description =2;
-  string val =3;
-  TypeProfileVal val_type =4;
-}
-
-/**
- * TypeProfileVal,type for Profile's val filed.
- *   STRING = 0; NUMBER =1; BOOLEAN = 2;
- **/
-enum TypeProfileVal {
-  STRING = 0;
-  NUMBER =1;
-  BOOLEAN = 2;
+  int32 cur_val =3;
+  int32 limit_val =4;
 }
