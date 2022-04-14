@@ -7,10 +7,10 @@ import (
 	"strings"
 
 	"github.com/golang/glog"
-	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
@@ -250,6 +250,13 @@ func buildMethodDesc(g *protogen.GeneratedFile, m *protogen.Method, method, path
 			rd, ok := rdi.(bool)
 			if ok {
 				mRet.RawDataResponse = rd
+			}
+		}
+		rdi, ok = cArg.Request[RawDataField]
+		if ok {
+			rd, ok := rdi.(bool)
+			if ok {
+				mRet.RawDataRequest = rd
 			}
 		}
 	}

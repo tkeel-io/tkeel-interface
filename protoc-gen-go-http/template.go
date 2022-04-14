@@ -12,7 +12,11 @@ var httpTemplate = `
 
 type {{.ServiceType}}HTTPServer interface {
 {{- range .MethodSets}}
+	{{- if .RawDataRequest}}
+	{{.Name}}(req *go_restful.Request, resp *go_restful.Response)
+	{{- else}}	
 	{{.Name}}(context.Context, *{{.Request}}) (*{{.Reply}}, error)
+	{{- end}}
 {{- end}}
 }
 
@@ -27,6 +31,9 @@ func new{{.ServiceType}}HTTPHandler(s {{.ServiceType}}HTTPServer) *{{.ServiceTyp
 {{- range .MethodSets}}
 
 func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_restful.Response) {
+	{{- if .RawDataRequest}}
+	h.srv.{{.Name}}(req, resp)
+	{{- else}}
 	in := {{.Request}}{}
 
 	{{- if .HasBody}}
@@ -107,6 +114,7 @@ func (h *{{$svrType}}HTTPHandler) {{.Name}}(req *go_restful.Request, resp *go_re
 		}
 	}
 	{{- end}}
+	{{- end}}
 }
 
 {{- end}}
@@ -161,6 +169,7 @@ type methodDesc struct {
 	ResponseBodyFieldName string
 	// comment
 	RawDataResponse bool
+	RawDataRequest  bool
 }
 
 func (s *serviceDesc) execute() string {
