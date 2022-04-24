@@ -118,7 +118,7 @@ message IdentifyResponse {
   repeated Permission permissions = 9; // plugins define permissions.
   bool disable_manual_activation =
       10; // plugins disable tenant manual activation.
-  repeated ProfileItem profile =11; // plugins controllable item.
+  bytes  profiles =11; // plugins controllable items eg:`[{  "key": "", "description": "","default": 0},{"key": "","description": "","default": "100:1;1000:60"}]`.
 }
 
 /**
@@ -183,13 +183,4 @@ message StatusResponse {
   PluginStatus status = 2; // plugin status.
 }
 
-/**
- * Profile is a controllable item provided by the plugin.
- * Platform administrators can set up plugin profiles through rudder.
- **/
-message ProfileItem {
-  string key = 1;
-  string description =2;
-  int32 cur_val =3;
-  int32 limit_val =4;
-}
+
