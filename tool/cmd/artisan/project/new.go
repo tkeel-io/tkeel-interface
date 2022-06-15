@@ -44,7 +44,7 @@ func (p *Project) New(ctx context.Context, dir string, layout string, branch str
 
 	//改cmd
 	e := os.Rename(
-		path.Join(to, "cmd", "hello"),
+		path.Join(to, "cmd", "tkeel-hello"),
 		path.Join(to, "cmd", p.Name),
 	)
 	if e != nil {

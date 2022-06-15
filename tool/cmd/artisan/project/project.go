@@ -30,7 +30,7 @@ func init() {
 	if repoURL = os.Getenv("KRATOS_LAYOUT_REPO"); repoURL == "" {
 		repoURL = "https://github.com/tkeel-io/tkeel-template-go.git"
 	}
-	timeout = "60s"
+	timeout = "300s"
 	CmdNew.Flags().StringVarP(&repoURL, "repo-url", "r", repoURL, "layout repo")
 	CmdNew.Flags().StringVarP(&branch, "branch", "b", branch, "repo branch")
 	CmdNew.Flags().StringVarP(&timeout, "timeout", "t", timeout, "time out")
@@ -74,7 +74,7 @@ func run(cmd *cobra.Command, args []string) {
 		}
 	case err = <-done:
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "\033[31mERROR: Failed to create project(%s)\033[m\n", ctx.Err())
+			fmt.Fprintf(os.Stderr, "\033[31mERROR: Failed to create project(%s)\033[m\n", err)
 		}
 	}
 }
