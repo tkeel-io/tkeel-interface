@@ -7,7 +7,7 @@ sidebar_position: 0
 
 {{range $code, $tag := .}}
 
-## {{$tag.Tag}}相关API
+## {{$tag.Tag}} API{#{{$tag.Tag}}}
 
 | Name |  Description | 
 | ---- |  ----------- | {{range $t, $operation := $tag.Methods}}

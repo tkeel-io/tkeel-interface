@@ -21,7 +21,6 @@ func init() {
 	rootCmd.AddCommand(project.CmdNew)
 	rootCmd.AddCommand(proto.CmdProto)
 	rootCmd.AddCommand(render.CmdMarkdown)
-	rootCmd.AddCommand(render.CmdSDK)
 }
 
 func main() {

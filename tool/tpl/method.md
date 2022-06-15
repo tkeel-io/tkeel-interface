@@ -2,7 +2,7 @@
 title: "{{.OperationID}}"
 description: '{{.Summary}}'
 ---
-{{$definitions := .Definitions}}
+{{- $definitions := .Definitions -}}
 
 调用该接口{{.Summary}}。
 
@@ -10,13 +10,18 @@ description: '{{.Summary}}'
 
 ## Request
 
-{{with $paths := FilterParameters .Parameters "path"}}
+
+```
+{{.Operation}} {{.Path }}
+```
+
+{{- with $paths := FilterParameters .Parameters "path"}}
 
 | Name | Located in | Type | Description | 
 | ---- | ---------- | ----------- | ----------- | {{range $param := $paths}}
 | {{$param.Name}} | path | {{$param.Type}} | {{$param.Description}} |  {{end}}{{end}}
 
-{{with $queries := FilterParameters .Parameters "query"}}
+{{- with $queries := FilterParameters .Parameters "query"}}
 
 ###  Request Parameters
 
@@ -24,12 +29,12 @@ description: '{{.Summary}}'
 | ---- | ---------- | ----------- | ----------- |  ---- |{{range $param := $queries}}
 | {{$param.Name}} | query | {{$param.Type}} | {{$param.Description}} |  {{$param.Required}} |{{end}}{{end}}
 
-{{with $bodies := FilterParameters .Parameters "body"}}
+{{- with $bodies := FilterParameters .Parameters "body"}}
 
 ### Request Body
 
-{{range $resp := $bodies}}
-{{if eq $resp.Type  "array" }}   
+{{- range $resp := $bodies }}
+{{- if eq $resp.Type  "array" }}   
 | Description | Type | Schema |
 | ----------- | ------ | ------ |
 | {{$resp.Description}} | Array | [{{FilterSchema $resp.Schema.Items.Ref}}](#{{FilterSchema $resp.Items.Ref}}) |
@@ -37,7 +42,7 @@ description: '{{.Summary}}'
 #### {{FilterSchema $resp.Items.Ref}}
 
 {{template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
-{{else}} 
+{{- else }} 
 | Description | Type | Schema |
 | ----------- | ------ | ------ |
 | {{$resp.Description}} | Object | [{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}}) |
@@ -45,16 +50,17 @@ description: '{{.Summary}}'
 #### {{FilterSchema $resp.Schema.Ref}}
 
 {{template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
-{{end}}
-{{end}}{{end}}
+{{- end }}
+{{- end }}
+{{- end }}
 
 ## Response
 
-{{range $code, $resp := .Responses}}
+{{- range $code, $resp := .Responses}}
 
 ### Response  {{$code}}
 
-{{if ne $resp.Schema.Items.Ref  "" }}   
+{{- if ne $resp.Schema.Items.Ref  ""}}   
 | Code1 | Description | Type | Schema |
 | ---- | ----------- | ------ | ------ |
 | {{$code}} | {{$resp.Description}} | Array | [{{FilterSchema $resp.Schema.Items.Ref}}](#{{FilterSchema $resp.Schema.Items.Ref}}) |
@@ -62,7 +68,7 @@ description: '{{.Summary}}'
 #### {{FilterSchema $resp.Schema.Items.Ref}}
 
 {{template "schema.md" CollectSchema $definitions  $resp.Schema.Items.Ref}}
-{{else if ne $resp.Schema.Ref  "" }} 
+{{- else if ne $resp.Schema.Ref  "" }} 
 | Code2 | Description | Type | Schema |
 | ---- | ----------- | ------ | ------ |
 | {{$code}} | {{$resp.Description}} | Object | [{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}}) |
@@ -70,10 +76,10 @@ description: '{{.Summary}}'
 #### {{FilterSchema $resp.Schema.Ref}}
 
 {{template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
-{{else}}
+{{- else}}
 | Code3 | Description | Type | 
 | ---- | ----------- | ------ | 
 | {{$code}} | {{$resp.Description}} | {{$resp.Schema}} |
-{{end}} 
-{{end}}
+{{- end}} 
+{{- end}}
 
