@@ -52,6 +52,15 @@ func FormatAnchor(schema string) string {
 	return schema
 }
 
+func FormatPath(schema string) string {
+	//schema = strings.Replace(schema, "/()/g", "_", 0)
+	schema = strings.Replace(schema, "/", "_", -1)
+	schema = strings.Replace(schema, "{", "_", -1)
+	schema = strings.Replace(schema, "}", "", -1)
+	return "Path_" + schema
+}
+
+
 type APIError map[string]string
 
 type API struct {

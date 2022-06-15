@@ -23,6 +23,7 @@ func New(templatePath, mode string) *Template {
 		"FilterSchema":     FilterSchema,
 		"CollectSchema":    CollectSchema,
 		"FormatAnchor":     FormatAnchor,
+		"FormatPath":     FormatPath,
 	}
 	for name, fn := range sprig.FuncMap() {
 		funcMap[name] = fn
@@ -65,6 +66,8 @@ func renderAPI(tmpl *Template, w Writer, r io.Reader, decode func(data []byte) (
 		return renderTag(tmpl, w, api)
 	case "method": // 文档函数
 		return renderMethod(tmpl, w, api)
+	case "sdk.ts": // 文档函数
+		return renderSDK(tmpl, w, api)
 	}
 
 	return errors.New("error mode")
@@ -91,6 +94,23 @@ func renderTag(tmpl *Template, w Writer, api *API) error {
 	tags := parseTags(api)
 	if err := tmpl.tmpl.Execute(w.For(fmt.Sprintf("tag.md")), tags); err != nil {
 		return err
+	}
+	return nil
+}
+
+func renderSDK(tmpl *Template, w Writer, api *API) error {
+	tags := parseTags(api)
+	for _, tag := range tags {
+		// tagName := tag.Tag
+		for _, method := range tag.Methods {
+			filename := method.OperationID
+			if filename == "" {
+				continue
+			}
+			if err := tmpl.tmpl.Execute(w.For(fmt.Sprintf("%s_%s.ts", "method", filename)), method); err != nil {
+				return err
+			}
+		}
 	}
 	return nil
 }
