@@ -2,14 +2,12 @@
 title: "{{.OperationID}}"
 description: '{{.Summary}}'
 ---
-{{- $definitions := .Definitions -}}
-
+{{- $definitions := .Definitions}}
 调用该接口{{.Summary}}。
 
-{{.Description}}
+{{- .Description}}
 
 ## Request
-
 
 ```
 {{.Operation}} {{.Path }}
