@@ -11,5 +11,5 @@ sidebar_position: 0
 
 | Name |  Description | 
 | ---- |  ----------- | {{range $t, $operation := $tag.Methods}}
-| [{{$operation.OperationID}}](./method_{{$operation.OperationID}})|  {{$operation.Summary}} |{{end}}
+| [{{$operation.OperationID}}](./method_{{$operation.OperationID}}.md)|  {{$operation.Summary}} |{{end}}
 {{end}}
