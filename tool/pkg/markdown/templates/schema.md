@@ -1,3 +1,4 @@
+
 | Name | Type | Description | 
 | ---- | ---- | ----------- |  
 {{- range $code, $resp := .Definition.Properties}}  
