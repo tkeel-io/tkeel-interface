@@ -82,7 +82,11 @@ func renderMethod(tmpl *Template, w Writer, api *API) error {
 			if filename == "" {
 				continue
 			}
-			if err := tmpl.tmpl.Execute(w.For(fmt.Sprintf("%s_%s.md", "method", filename)), method); err != nil {
+			filename = fmt.Sprintf("%s_%s.md", "method", filename)
+			if err := tmpl.tmpl.Execute(w.For(filename), method); err != nil {
+				return err
+			}
+			if err := FormatMarkdownFile(filename); err != nil {
 				return err
 			}
 		}
@@ -92,7 +96,11 @@ func renderMethod(tmpl *Template, w Writer, api *API) error {
 
 func renderTag(tmpl *Template, w Writer, api *API) error {
 	tags := parseTags(api)
-	if err := tmpl.tmpl.Execute(w.For(fmt.Sprintf("tag.md")), tags); err != nil {
+	filename := fmt.Sprintf("tag.md")
+	if err := tmpl.tmpl.Execute(w.For(filename), tags); err != nil {
+		return err
+	}
+	if err := FormatMarkdownFile(filename); err != nil {
 		return err
 	}
 	return nil

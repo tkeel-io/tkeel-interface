@@ -35,7 +35,7 @@ description: "{{.OperationID}}"
 
 #### +1{{FilterSchema $resp.Items.Ref}}+
 
-{{template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
+{{- template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
 {{- else if $resp.Schema.Ref }}
 | 描述 | 类型 |
 | ----------- | ------ |
@@ -43,7 +43,7 @@ description: "{{.OperationID}}"
 
 #### {{FilterSchema $resp.Schema.Ref}}
 
-{{template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
+{{- template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
 
 {{- else }} 
 | 描述 | 类型 |
@@ -68,7 +68,7 @@ description: "{{.OperationID}}"
 
 #### {{FilterSchema $resp.Schema.Items.Ref}}
 
-<1>{{template "schema.md" CollectSchema $definitions  $resp.Schema.Items.Ref}}
+{{- template "schema.md" CollectSchema $definitions  $resp.Schema.Items.Ref}}
 {{- else if ne $resp.Schema.Ref  "" }}
 | Code | 描述 | 类型 |
 | ---- | ----------- | ------ | 
@@ -76,7 +76,7 @@ description: "{{.OperationID}}"
 
 #### {{FilterSchema $resp.Schema.Ref}}
 
-{{template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
+{{- template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
 {{- else if eq $resp.Schema.Type  "" }}
 | Code | 描述 | 类型 |
 | ---- | ----------- | ------ | 
