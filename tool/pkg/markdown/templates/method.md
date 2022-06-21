@@ -33,10 +33,10 @@ description: "{{.OperationID}}"
 | ----------- | ------ |
 | {{$resp.Description}} | Array[[{{FilterSchema $resp.Schema.Items.Ref}}](#{{FilterSchema $resp.Items.Ref}})] |
 
-#### +1{{FilterSchema $resp.Items.Ref}}+
+#### {{FilterSchema $resp.Items.Ref}}
 
 {{- template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
-{{- else if $resp.Schema.Ref }}
+{{ else if $resp.Schema.Ref }}
 | 描述 | 类型 |
 | ----------- | ------ |
 | {{$resp.Description}} | Object([{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}})) |
@@ -45,7 +45,7 @@ description: "{{.OperationID}}"
 
 {{- template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
 
-{{- else }} 
+{{ else }} 
 | 描述 | 类型 |
 | ----------- | ------ |
 | {{$resp.Description}} | Object(<业务对象>) |

@@ -86,9 +86,9 @@ func renderMethod(tmpl *Template, w Writer, api *API) error {
 			if err := tmpl.tmpl.Execute(w.For(filename), method); err != nil {
 				return err
 			}
-			if err := FormatMarkdownFile(filename); err != nil {
-				return err
-			}
+			//if err := FormatMarkdownFile(filename); err != nil {
+			//	return err
+			//}
 		}
 	}
 	return nil
@@ -100,9 +100,9 @@ func renderTag(tmpl *Template, w Writer, api *API) error {
 	if err := tmpl.tmpl.Execute(w.For(filename), tags); err != nil {
 		return err
 	}
-	if err := FormatMarkdownFile(filename); err != nil {
-		return err
-	}
+	//if err := FormatMarkdownFile(filename); err != nil {
+	//	return err
+	//}
 	return nil
 }
 
