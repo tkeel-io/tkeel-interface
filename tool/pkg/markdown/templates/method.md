@@ -1,83 +1,93 @@
 ---
-title: "{{.OperationID}}"
-description: '{{.Summary}}'
+title: '{{.Summary}}'
+description: "{{.OperationID}}"
 ---
 {{- $definitions := .Definitions}}
+## 接口说明
 调用该接口{{.Summary}}。
 
 {{- .Description}}
 
-## Request
+## URI
 
 ```
 {{.Operation}} {{.Path }}
 ```
 
-{{- with $paths := FilterParameters .Parameters "path"}}
+## 请求参数
 
-| Name | Located in | Type | Description | 
-| ---- | ---------- | ----------- | ----------- | {{range $param := $paths}}
-| {{$param.Name}} | path | {{$param.Type}} | {{$param.Description}} |  {{end}}{{end}}
-
-{{- with $queries := FilterParameters .Parameters "query"}}
-
-###  Request Parameters
-
-| Name | Located in | Type | Description |  Required |
-| ---- | ---------- | ----------- | ----------- |  ---- |{{range $param := $queries}}
+| 名称 | 参数位置 | 类型 | 描述 |  是否必须 |
+| ---- | ---------- | ----------- | ----------- | ----------- | 
+{{- with $paths := FilterParameters .Parameters "path"}}    {{range $param := $paths}}
+| {{$param.Name}} | path | {{$param.Type}} | {{$param.Description}} |  Required | {{end}}{{end}}
+{{- with $queries := FilterParameters .Parameters "query"}} {{range $param := $queries}}
 | {{$param.Name}} | query | {{$param.Type}} | {{$param.Description}} |  {{$param.Required}} |{{end}}{{end}}
 
 {{- with $bodies := FilterParameters .Parameters "body"}}
 
-### Request Body
+### 请求Body
 
 {{- range $resp := $bodies }}
 {{- if eq $resp.Type  "array" }}   
-| Description | Type | Schema |
-| ----------- | ------ | ------ |
-| {{$resp.Description}} | Array | [{{FilterSchema $resp.Schema.Items.Ref}}](#{{FilterSchema $resp.Items.Ref}}) |
+| 描述 | 类型 |
+| ----------- | ------ |
+| {{$resp.Description}} | Array[[{{FilterSchema $resp.Schema.Items.Ref}}](#{{FilterSchema $resp.Items.Ref}})] |
 
-#### {{FilterSchema $resp.Items.Ref}}
+#### +1{{FilterSchema $resp.Items.Ref}}+
 
 {{template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
-{{- else }} 
-| Description | Type | Schema |
-| ----------- | ------ | ------ |
-| {{$resp.Description}} | Object | [{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}}) |
+{{- else if $resp.Schema.Ref }}
+| 描述 | 类型 |
+| ----------- | ------ |
+| {{$resp.Description}} | Object([{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}})) |
 
 #### {{FilterSchema $resp.Schema.Ref}}
 
 {{template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
+
+{{- else }} 
+| 描述 | 类型 |
+| ----------- | ------ |
+| {{$resp.Description}} | Object(<业务对象>) |
+
 {{- end }}
 {{- end }}
 {{- end }}
 
-## Response
+## 响应
 
 {{- range $code, $resp := .Responses}}
+{{if ne $code "default"}}
 
-### Response  {{$code}}
+### 响应<{{$code}}>
 
 {{- if ne $resp.Schema.Items.Ref  ""}}   
-| Code1 | Description | Type | Schema |
-| ---- | ----------- | ------ | ------ |
-| {{$code}} | {{$resp.Description}} | Array | [{{FilterSchema $resp.Schema.Items.Ref}}](#{{FilterSchema $resp.Schema.Items.Ref}}) |
+| Code | 描述 | 类型 |
+| ---- | ----------- | ------ |
+| {{$code}} | {{$resp.Description}} | Array[{{FilterSchema $resp.Schema.Items.Ref}}](#{{FilterSchema $resp.Schema.Items.Ref}}) |
 
 #### {{FilterSchema $resp.Schema.Items.Ref}}
 
-{{template "schema.md" CollectSchema $definitions  $resp.Schema.Items.Ref}}
-{{- else if ne $resp.Schema.Ref  "" }} 
-| Code2 | Description | Type | Schema |
-| ---- | ----------- | ------ | ------ |
-| {{$code}} | {{$resp.Description}} | Object | [{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}}) |
+<1>{{template "schema.md" CollectSchema $definitions  $resp.Schema.Items.Ref}}
+{{- else if ne $resp.Schema.Ref  "" }}
+| Code | 描述 | 类型 |
+| ---- | ----------- | ------ | 
+| {{$code}} | {{$resp.Description}} | Object([{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}})) |
 
 #### {{FilterSchema $resp.Schema.Ref}}
 
 {{template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
-{{- else}}
-| Code3 | Description | Type | 
+{{- else if eq $resp.Schema.Type  "" }}
+| Code | 描述 | 类型 |
 | ---- | ----------- | ------ | 
+| {{$code}} | {{$resp.Description}} | - |
+
+{{- else}}
+| Code | 描述 | 类型 |
+| ---- | ----------- | ------ |
 | {{$code}} | {{$resp.Description}} | {{$resp.Schema}} |
 {{- end}} 
+
+{{- end}}
 {{- end}}
 
