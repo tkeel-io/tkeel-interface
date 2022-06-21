@@ -37,9 +37,9 @@ description: "{{.OperationID}}"
 
 {{- template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
 {{ else if $resp.Schema.Ref }}
-| 描述 | 类型 |
-| ----------- | ------ |
-| {{$resp.Description}} | Object([{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}})) |
+| 字段名 | 类型 | 描述 |
+| ----------- | ------ | ------ |
+| Body | Object([{{FilterSchema $resp.Schema.Ref}}](#{{FilterSchema $resp.Schema.Ref}})) | {{$resp.Description}} |
 
 #### {{FilterSchema $resp.Schema.Ref}}
 
@@ -90,4 +90,6 @@ description: "{{.OperationID}}"
 
 {{- end}}
 {{- end}}
+
+
 

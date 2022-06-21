@@ -1,5 +1,4 @@
-
-| Name | Type | Description | 
+| 字段名 | 类型 | 描述 |
 | ---- | ---- | ----------- |  
 {{- range $code, $resp := .Definition.Properties}}  
     {{- if eq $resp.Type  "array" }}   
