@@ -72,7 +72,7 @@ func StringContains(s []string, e string) bool {
 
 func IsExcludeTag(tags []string) bool {
 	for _, tag := range tags {
-		if tag == "Internal"{
+		if tag == "Internal" {
 			fmt.Println(1)
 		}
 		if ret := StringContains(ExcludeTags, tag); ret {
@@ -92,16 +92,22 @@ type API struct {
 	Schemes     []string              `json,yaml:"schemes"`
 	Consumes    []string              `json,yaml:"consumes"`
 	Produces    []string              `json,yaml:"produces"`
-	Paths       map[string]Methods    `json,yaml:"paths"`
+	Paths       map[string]Operations    `json,yaml:"paths"`
 	Definitions map[string]Definition `json,yaml:"definitions"`
 }
 
-type Methods map[string]*Operation
+type Operations map[string]*Operation
+
+type Method struct {
+	Index int
+	*Operation
+}
 
 type Tag struct {
+	TagIndex int
 	Tag      string
 	BasePath string
-	Methods  []*Operation
+	Methods  map[int]*Method
 }
 
 type Operation struct {
