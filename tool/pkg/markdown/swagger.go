@@ -2,6 +2,7 @@ package markdown
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"gopkg.in/yaml.v2"
@@ -60,6 +61,26 @@ func FormatPath(schema string) string {
 	return "Path_" + schema
 }
 
+func StringContains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
+func IsExcludeTag(tags []string) bool {
+	for _, tag := range tags {
+		if tag == "Internal"{
+			fmt.Println(1)
+		}
+		if ret := StringContains(ExcludeTags, tag); ret {
+			return ret
+		}
+	}
+	return false
+}
 
 type APIError map[string]string
 
