@@ -14,6 +14,11 @@
     {{- end}} 
 {{- end}}
 
+{{if .Definition.Example }}
+```jsx title="Example"
+{{.Definition.Example}}
+```
+{{- end}}
 
 {{$definitions := .Definitions}}
 {{- range $code, $resp := .Definition.Properties -}}  

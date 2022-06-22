@@ -92,7 +92,7 @@ type API struct {
 	Schemes     []string              `json,yaml:"schemes"`
 	Consumes    []string              `json,yaml:"consumes"`
 	Produces    []string              `json,yaml:"produces"`
-	Paths       map[string]Operations    `json,yaml:"paths"`
+	Paths       map[string]Operations `json,yaml:"paths"`
 	Definitions map[string]Definition `json,yaml:"definitions"`
 }
 
@@ -171,7 +171,31 @@ type License struct {
 
 type Definition struct {
 	Type       string                  `json,yaml:"type"`
+	Example    string                  `json,yaml:"example"`
 	Properties map[string]SchemaObject `json,yaml:"properties"`
+}
+
+func (u *Definition) UnmarshalJSON(data []byte) error {
+	type (
+		Alias Definition
+	)
+	aux := &struct {
+		Example interface{} `json:"example"`
+		*Alias
+	}{
+		Alias: (*Alias)(u),
+	}
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	if aux.Example!=nil{
+		if ret, err := json.MarshalIndent(aux.Example, "", "    "); err != nil {
+			return err
+		} else {
+			u.Example = string(ret)
+		}
+	}
+	return nil
 }
 
 type SchemaContext struct {
