@@ -1,6 +1,7 @@
 ---
 title: '{{.Summary}}'
 description: "{{.OperationID}}"
+sidebar_position: "{{.Index}}"
 ---
 {{- $definitions := .Definitions}}
 ## 接口说明
