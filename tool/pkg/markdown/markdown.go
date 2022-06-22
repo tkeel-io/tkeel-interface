@@ -133,9 +133,13 @@ func renderSDK(tmpl *Template, w Writer, api *API) error {
 }
 
 func parseTags(api *API) map[string]*Tag {
+	tagIndex := 0
+	methodIndex := 0
+	step := getMaxMethodNum(api)
 	tags := make(map[string]*Tag)
-	for path, methods := range api.Paths {
-		for typ, method := range methods {
+	for path, operations := range api.Paths {
+		for typ, openator := range operations {
+			method := &Method{Operation: openator}
 			if len(method.Tags) == 0 {
 				fmt.Printf("skip:method(%v) without tag\n", method.Summary)
 				continue
@@ -159,14 +163,27 @@ func parseTags(api *API) map[string]*Tag {
 
 			tag, ok := tags[key]
 			if !ok {
-				tag = &Tag{Tag: key, Methods: make([]*Operation, 0)}
+				tag = &Tag{TagIndex: tagIndex, Tag: key, Methods: make(map[int]*Method, 0)}
 				tags[key] = tag
+				tagIndex += 10
 			}
 			method.Definitions = api.Definitions
-			method.Operation = typ
+			method.Operation.Operation = typ
 			method.Path = filepath.Join(api.BasePath, path)
-			tag.Methods = append(tag.Methods, method)
+			method.Index = tagIndex*step + methodIndex
+			tag.Methods[method.Index] = method
+			methodIndex++
 		}
 	}
 	return tags
+}
+
+func getMaxMethodNum(api *API) int {
+	maxnum := 0
+	for _, methods := range api.Paths {
+		if len(methods) > maxnum {
+			maxnum = len(methods)
+		}
+	}
+	return maxnum
 }
