@@ -1,7 +1,7 @@
 ---
 title: '{{.Summary}}'
 description: "{{.OperationID}}"
-sidebar_position: "{{.Index}}"
+sidebar_position: {{.Index}}
 ---
 {{- $definitions := .Definitions}}
 ## 接口说明
@@ -12,7 +12,7 @@ sidebar_position: "{{.Index}}"
 ## URI
 
 ```
-{{.Operation}} {{.Path }}
+{{.Operation.Operation}} {{.Path }}
 ```
 
 ## 请求参数
@@ -36,7 +36,7 @@ sidebar_position: "{{.Index}}"
 
 #### {{FilterSchema $resp.Items.Ref}}
 
-{{- template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
+{{ template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
 {{ else if $resp.Schema.Ref }}
 | 字段名 | 类型 | 描述 |
 | ----------- | ------ | ------ |
@@ -44,7 +44,7 @@ sidebar_position: "{{.Index}}"
 
 #### {{FilterSchema $resp.Schema.Ref}}
 
-{{- template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
+{{ template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
 
 {{ else }} 
 | 描述 | 类型 |
