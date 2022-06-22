@@ -45,3 +45,23 @@ $ go run cmd/helloworld/main.go
 
 
 
+
+### Markdown
+
+```bash
+# 基于 apidocs.swagger.json 生成 API 列表
+$ artisan markdown -f apidocs.swagger.json -m tag -o .
+
+# 基于 apidocs.swagger.json 生成 API 函数详情
+$ artisan markdown -f apidocs.swagger.json -m method -o .
+
+# 基于 apidocs.swagger.json 生成 API 列表 以及 API 函数详情
+$ artisan markdown -f apidocs.swagger.json -m all -o .
+
+# 基于 apidocs.swagger.json 生成，且排除 tag 为 'Private' 以及 'Internal' 的函数
+$ artisan markdown -f apidocs.swagger.json -m all -o . --exclude_tag 'Private' --exclude_tag 'Internal'
+
+# 基于 apidocs.swagger.json 生成，且指定模板目录
+$ artisan markdown -f apidocs.swagger.json -m all -o . -t pkg/markdown/templates
+```
+

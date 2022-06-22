@@ -11,6 +11,10 @@ import (
 	"github.com/Masterminds/sprig"
 )
 
+var (
+	ExcludeTags = []string{}
+)
+
 type Template struct {
 	mode string
 	tmpl *template.Template
@@ -23,7 +27,9 @@ func New(templatePath, mode string) *Template {
 		"FilterSchema":     FilterSchema,
 		"CollectSchema":    CollectSchema,
 		"FormatAnchor":     FormatAnchor,
-		"FormatPath":     FormatPath,
+		"FormatPath":       FormatPath,
+		"StringContains":   StringContains,
+		"IsExcludeTag":     IsExcludeTag,
 	}
 	for name, fn := range sprig.FuncMap() {
 		funcMap[name] = fn
@@ -78,6 +84,9 @@ func renderMethod(tmpl *Template, w Writer, api *API) error {
 	for _, tag := range tags {
 		//tagName := tag.Tag
 		for _, method := range tag.Methods {
+			if IsExcludeTag(method.Tags) {
+				continue
+			}
 			filename := method.OperationID
 			if filename == "" {
 				continue
@@ -127,9 +136,13 @@ func parseTags(api *API) map[string]*Tag {
 	tags := make(map[string]*Tag)
 	for path, methods := range api.Paths {
 		for typ, method := range methods {
-
 			if len(method.Tags) == 0 {
 				fmt.Printf("skip:method(%v) without tag\n", method.Summary)
+				continue
+			}
+
+			if IsExcludeTag(method.Tags) {
+				fmt.Printf("skip:method(%v) with Tag(:%v) in ExcludeTag(%v)\n", method.Summary, method.Tags, ExcludeTags)
 				continue
 			}
 

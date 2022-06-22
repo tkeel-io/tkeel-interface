@@ -47,3 +47,23 @@ $ go run cmd/helloworld/main.go
 
 
 
+### Markdown
+
+```bash
+# Generate API list based on apidocs.swagger.json
+$ artisan markdown -f apidocs.swagger.json -m tag -o .
+
+# Generate API function details based on apidocs.swagger.json
+$ artisan markdown -f apidocs.swagger.json -m method -o .
+
+# Generate API list and API function details based on apidocs.swagger.json
+$ artisan markdown -f apidocs.swagger.json -m all -o .
+
+# Generated based on apidocs.swagger.json and excludes functions with tags 'Private' and 'Internal'
+$ artisan markdown -f apidocs.swagger.json -m all -o . --exclude_tag 'Private' --exclude_tag 'Internal'
+
+# Generate based on apidocs.swagger.json and specify the template directory
+$ artisan markdown -f apidocs.swagger.json -m all -o . -t pkg/markdown/templates
+```
+
+

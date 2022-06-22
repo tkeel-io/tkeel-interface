@@ -14,7 +14,7 @@ import (
 var CmdMarkdown = &cobra.Command{
 	Use:   "markdown",
 	Short: "Create a markdown document.",
-	Long:  "Create a markdown document using the repository template. Example: tkeel-tool markdown -f ../tkeeldemo/api/apidocs.swagger.json -t ../tkeeldemo/third_party/markdown-templates/ -o ../tkeel-docs/docs/api/Greeter -m all",
+	Long:  "Create a markdown document using the swagger file. Example: tkeel-tool markdown -f ../tkeeldemo/api/apidocs.swagger.json -t ../tkeeldemo/third_party/markdown-templates/ -o ../tkeel-docs/docs/api/Greeter -m all",
 	Run:   run,
 }
 
@@ -23,6 +23,7 @@ var (
 	swaggerPath  string
 	templatePath string
 	outputPath   string
+	excludeTag   []string
 )
 
 func init() {
@@ -30,13 +31,13 @@ func init() {
 	CmdMarkdown.Flags().StringVarP(&templatePath, "template", "t", "", "template path, like (markdown/templates/)")
 	CmdMarkdown.Flags().StringVarP(&outputPath, "output", "o", "docs", "output path,  default is stdio")
 	CmdMarkdown.Flags().StringVarP(&mode, "mode", "m", "tag", "mode(all | tag | method)")
+	CmdMarkdown.Flags().StringArrayVarP(&excludeTag, "exclude_tag", "e",  []string{}, "exclude tag, like 'Internal'")
 
 	CmdMarkdown.MarkFlagRequired("swaggerPath")
-
 }
 
 func run(cmd *cobra.Command, args []string) {
-
+	markdown.ExcludeTags = excludeTag
 	switch mode {
 	case "tag": // 文档目录
 		Render(swaggerPath, templatePath, outputPath, "tag")
