@@ -40,7 +40,7 @@ sidebar_position: {{.Index}}
 
 #### {{FilterSchema $resp.Items.Ref}}
 
-{{ template "schema.md" CollectSchema $definitions  $resp.Items.Ref}}
+{{ template "schema.md" CollectSchema $definitions  $resp.Items.Ref -}}
 {{ else if $resp.Schema.Ref }}
 | 字段名 | 类型 | 描述 |
 | ----------- | ------ | ------ |
@@ -48,8 +48,9 @@ sidebar_position: {{.Index}}
 
 #### {{FilterSchema $resp.Schema.Ref}}
 
-{{ template "schema.md" CollectSchema $definitions  $resp.Schema.Ref}}
-
+{{ template "schema.md" CollectSchema $definitions  $resp.Schema.Ref -}}
+{{ else if eq $resp.Schema.Type "object"}}
+{{ template "schema.md" CollectSchema $definitions $resp.Schema}}
 {{ else }} 
 | 描述 | 类型 |
 | ----------- | ------ |

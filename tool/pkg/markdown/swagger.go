@@ -36,12 +36,28 @@ func FilterSchema(schema string) string {
 	return schema
 }
 
-func CollectSchema(definitions map[string]Definition, schema string) SchemaContext {
-	schema = strings.Replace(schema, "#/definitions/", "", 1)
+func CollectSchema(definitions map[string]SchemaObject, schema interface{}) SchemaContext {
+	switch schema := schema.(type) {
+	case string:
+		fmt.Println(2222)
+		schema = strings.Replace(schema, "#/definitions/", "", 1)
+		return SchemaContext{
+			schema,
+			definitions,
+			definitions[schema],
+		}
+	case SchemaObject:
+		fmt.Println(1111)
+		return SchemaContext{
+			"",
+			definitions,
+			schema,
+		}
+	}
 	return SchemaContext{
-		schema,
+		"",
 		definitions,
-		definitions[schema],
+		SchemaObject{},
 	}
 }
 
@@ -85,15 +101,15 @@ func IsExcludeTag(tags []string) bool {
 type APIError map[string]string
 
 type API struct {
-	Swagger     string                `json,yaml:"swagger"`
-	Info        Info                  `json,yaml:"info"`
-	Host        string                `json,yaml:"host"`
-	BasePath    string                `json,yaml:"basePath"`
-	Schemes     []string              `json,yaml:"schemes"`
-	Consumes    []string              `json,yaml:"consumes"`
-	Produces    []string              `json,yaml:"produces"`
-	Paths       map[string]Operations `json,yaml:"paths"`
-	Definitions map[string]Definition `json,yaml:"definitions"`
+	Swagger     string                  `json,yaml:"swagger"`
+	Info        Info                    `json,yaml:"info"`
+	Host        string                  `json,yaml:"host"`
+	BasePath    string                  `json,yaml:"basePath"`
+	Schemes     []string                `json,yaml:"schemes"`
+	Consumes    []string                `json,yaml:"consumes"`
+	Produces    []string                `json,yaml:"produces"`
+	Paths       map[string]Operations   `json,yaml:"paths"`
+	Definitions map[string]SchemaObject `json,yaml:"definitions"`
 }
 
 type Operations map[string]*Operation
@@ -114,13 +130,13 @@ type Operation struct {
 	API         *API
 	Operation   string
 	Path        string
-	Tags        []string              `json,yaml:"tags"`
-	Description string                `json,yaml:"description"`
-	OperationID string                `json,yaml:"operationId"`
-	Summary     string                `json,yaml:"summary"`
-	Parameters  []Parameter           `json,yaml:"parameters"`
-	Responses   map[string]Response   `json,yaml:"responses"`
-	Definitions map[string]Definition `json,yaml:"definitions"`
+	Tags        []string                `json,yaml:"tags"`
+	Description string                  `json,yaml:"description"`
+	OperationID string                  `json,yaml:"operationId"`
+	Summary     string                  `json,yaml:"summary"`
+	Parameters  []Parameter             `json,yaml:"parameters"`
+	Responses   map[string]Response     `json,yaml:"responses"`
+	Definitions map[string]SchemaObject `json,yaml:"definitions"`
 }
 
 type Response struct {
@@ -129,13 +145,16 @@ type Response struct {
 }
 
 type SchemaObject struct {
-	Type        string `json:"type"`
-	Description string `json:"description"`
-	Ref         string `json:"$ref"`
+	Type        string                  `json:"type"`
+	Example     string                  `json,yaml:"example"`
+	Properties  map[string]SchemaObject `json:"properties"`
+	Description string                  `json:"description"`
+	Ref         string                  `json:"$ref"`
 	Items       struct {
 		Type string `json:"type"`
 		Ref  string `json:"$ref"`
 	} `json:"items"`
+	ExternalDocs ExternalDocumentation `json,yaml:"external_docs"`
 }
 
 type Parameter struct {
@@ -169,21 +188,21 @@ type License struct {
 	URL  string `json,yaml:"url"`
 }
 
-type Definition struct {
-	Type         string                  `json,yaml:"type"`
-	Example      string                  `json,yaml:"example"`
-	Properties   map[string]SchemaObject `json,yaml:"properties"`
-	ExternalDocs ExternalDocumentation   `json,yaml:"external_docs"`
-}
+//type Definition struct {
+//	Type         string                  `json,yaml:"type"`
+//	Example      string                  `json,yaml:"example"`
+//	Properties   map[string]SchemaObject `json,yaml:"properties"`
+//	ExternalDocs ExternalDocumentation   `json,yaml:"external_docs"`
+//}
 
 type ExternalDocumentation struct {
 	Description string `json,yaml:"description"`
 	URL         string `json,yaml:"url"`
 }
 
-func (u *Definition) UnmarshalJSON(data []byte) error {
+func (u *SchemaObject) UnmarshalJSON(data []byte) error {
 	type (
-		Alias Definition
+		Alias SchemaObject
 	)
 	aux := &struct {
 		Example interface{} `json:"example"`
@@ -206,6 +225,6 @@ func (u *Definition) UnmarshalJSON(data []byte) error {
 
 type SchemaContext struct {
 	TopRef      string
-	Definitions map[string]Definition
-	Definition  Definition
+	Definitions map[string]SchemaObject
+	Definition  SchemaObject
 }
