@@ -15,14 +15,18 @@ sidebar_position: {{.Index}}
 {{.Operation.Operation}} {{.Path }}
 ```
 
+{{- $paths := FilterParameters .Parameters "path"}}
+{{- $queries := FilterParameters .Parameters "query"}}
+{{ if and $paths $queries}}
 ## 请求参数
 
 | 名称 | 参数位置 | 类型 | 描述 |  是否必须 |
 | ---- | ---------- | ----------- | ----------- | ----------- | 
-{{- with $paths := FilterParameters .Parameters "path"}}    {{range $param := $paths}}
-| {{$param.Name}} | path | {{$param.Type}} | {{$param.Description}} |  Required | {{end}}{{end}}
-{{- with $queries := FilterParameters .Parameters "query"}} {{range $param := $queries}}
-| {{$param.Name}} | query | {{$param.Type}} | {{$param.Description}} |  {{$param.Required}} |{{end}}{{end}}
+{{range $param := $paths}}
+| {{$param.Name}} | path | {{$param.Type}} | {{$param.Description}} |  Required | {{end}}
+{{range $param := $queries}}
+| {{$param.Name}} | query | {{$param.Type}} | {{$param.Description}} |  {{$param.Required}} |{{end}}
+{{end}}
 
 {{- with $bodies := FilterParameters .Parameters "body"}}
 
