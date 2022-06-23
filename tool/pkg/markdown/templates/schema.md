@@ -20,6 +20,12 @@
 ```
 {{- end}}
 
+{{if .Definition.ExternalDocs.Description }}
+```jsx title="ExternalDocs.Description"
+{{.Definition.ExternalDocs.Description}}
+```
+{{- end}}
+
 {{$definitions := .Definitions}}
 {{- range $code, $resp := .Definition.Properties -}}  
     {{- if eq $resp.Type  "array" -}}   
