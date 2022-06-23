@@ -170,9 +170,15 @@ type License struct {
 }
 
 type Definition struct {
-	Type       string                  `json,yaml:"type"`
-	Example    string                  `json,yaml:"example"`
-	Properties map[string]SchemaObject `json,yaml:"properties"`
+	Type         string                  `json,yaml:"type"`
+	Example      string                  `json,yaml:"example"`
+	Properties   map[string]SchemaObject `json,yaml:"properties"`
+	ExternalDocs ExternalDocumentation   `json,yaml:"external_docs"`
+}
+
+type ExternalDocumentation struct {
+	Description string `json,yaml:"description"`
+	URL         string `json,yaml:"url"`
 }
 
 func (u *Definition) UnmarshalJSON(data []byte) error {
@@ -188,7 +194,7 @@ func (u *Definition) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &aux); err != nil {
 		return err
 	}
-	if aux.Example!=nil{
+	if aux.Example != nil {
 		if ret, err := json.MarshalIndent(aux.Example, "", "    "); err != nil {
 			return err
 		} else {
