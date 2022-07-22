@@ -2,7 +2,6 @@ package markdown
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
 
 	"gopkg.in/yaml.v2"
@@ -39,7 +38,7 @@ func FilterSchema(schema string) string {
 func CollectSchema(definitions map[string]SchemaObject, schema interface{}) SchemaContext {
 	switch schema := schema.(type) {
 	case string:
-		fmt.Println(2222)
+		//fmt.Println(2222)
 		schema = strings.Replace(schema, "#/definitions/", "", 1)
 		return SchemaContext{
 			schema,
@@ -47,7 +46,7 @@ func CollectSchema(definitions map[string]SchemaObject, schema interface{}) Sche
 			definitions[schema],
 		}
 	case SchemaObject:
-		fmt.Println(1111)
+		//fmt.Println(1111)
 		return SchemaContext{
 			"",
 			definitions,
@@ -89,7 +88,7 @@ func StringContains(s []string, e string) bool {
 func IsExcludeTag(tags []string) bool {
 	for _, tag := range tags {
 		if tag == "Internal" {
-			fmt.Println(1)
+			//fmt.Println(1)
 		}
 		if ret := StringContains(ExcludeTags, tag); ret {
 			return ret
